@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="blue">#2196F3</color>
+    <color name="red">#FF0000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="chocolate_brown">#3C2814</color> <!-- قهوه‌ای شکلاتی -->
+    <color name="caramel">#D28C46</color> <!-- کارامل -->
+    <color name="light_beige">#F5F5DC</color> <!-- بژ روشن -->
+    <color name="light_beige_dark">#CC8F35</color> <!-- بژ روشن -->
+    <color name="mocha_brown">#503C28</color> <!-- قهوه‌ای موکا -->
+    <color name="taupe">#6E5A46</color> <!-- تاوپ -->
+    <color name="highlights">#D28C46</color> <!-- رنگ عناصر برجسته -->
+
+
+    <color name="green_200">#0F9D58</color>
+    <color name="green_500">#0F9D58</color>
+    <color name="green_700">#0F9D58</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="grey">#aaa</color>
+    <color name="button_color">#1E573B</color>
+
+    <color name="yellow">#FFEB3B</color>
+
 </resources>
+

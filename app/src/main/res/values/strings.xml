@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Karen Balance</string>
+    <string name="home_page">Home Page</string>
+    <string name="menu_money">Money</string>
+    <string name="menu_charts">Charts</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_targets">Targets</string>
+    <string name="menu_savings">Savings</string>
+    <string name="monthly_income_nameBank">Monthly Income and Name Bank</string>
+    <string name="daily_spent_income">Daily Spent Income</string>
+    <string name="monthly_spent_income">Monthly Spent Income</string>
+    <string name="error_read_information">Error to Read Information</string>
+    <string name="btn_edit">btn Edit</string>
+    <string name="btn_add">btn Add</string>
+    <string name="hide_monthly_income">* * * * * * *</string>
+    <string name="name_bank">Name Bank</string>
+    <string name="today_expenses">Today\'s expenses</string>
+    <string name="month_expenses">This month\'s expenses</string>
+    <string name="list_is_empty">List Is Empty</string>
+    <string name="average_daily_spending_amount_on_the_chart">Average daily spending amount on the chart</string>
 </resources>

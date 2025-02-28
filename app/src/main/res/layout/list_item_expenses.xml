@@ -1,0 +1,75 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/back_list_item_recycle"
+    android:paddingBottom="5dp">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_edit_report_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/highlights"
+        android:contentDescription="@string/btn_edit"
+        android:src="@drawable/ic_edit"
+        app:backgroundTint="@color/chocolate_brown"
+        app:borderWidth="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:maxImageSize="26dp"
+        app:tint="@color/chocolate_brown" />
+
+    <TextView
+        android:id="@+id/txt_price"
+        android:layout_width="231dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/pacifico_egular"
+        android:text="Price"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ScrollView with fixed height -->
+    <ScrollView
+        android:layout_width="337dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
+        app:layout_constraintTop_toBottomOf="@+id/txt_price">
+
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:text="مبلغ یک میلیون تومان به شرح زیر خرج شده است:400,000 تومان برای خرید مواد غذایی از جمله نان، برنج، روغن، و سایر اقلام ضروری صرف شده است. 100,000 تومان برای هزینه‌های حمل‌ونقل شامل تاکسی، اتوبوس یا سوخت خودرو پرداخت شده است. 150,000 تومان به تفریحات اختصاص داده شده که شامل صرف غذا در رستوران و نوشیدنی در کافه می‌شود. 50,000 تومان نیز برای سرگرمی‌هایی مانند خرید بلیت سینما یا پرداخت هزینه فعالیت‌های تفریحی هزینه شده است. 200,000 تومان برای پرداخت قبوض مختلف مانند آب، برق، گاز و اینترنت استفاده شده است. 50,000 تومان به خرید لوازم بهداشتی مانند شامپو و صابون اختصاص یافته است. در نهایت، 50,000 تومان به عنوان پس‌انداز به حساب بانکی منتقل شده است."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.347"
+            app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
+            app:layout_constraintTop_toBottomOf="@+id/txt_price" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txt_date_time"
+        android:layout_width="101dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="1398/66/65 \n 34:34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_price"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_beige"
+
+    tools:context=".MoneyFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_list_daily_expense"
+            android:textColor="@color/caramel"
+            android:layout_width="0dp"
+            android:layout_height="57dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/pacifico_egular"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/chocolate_brown"
+            android:text="@string/today_expenses" />
+
+        <Button
+            android:id="@+id/btn_list_monthly_expense"
+            android:textColor="@color/caramel"
+            android:layout_width="0dp"
+            android:fontFamily="@font/pacifico_egular"
+            android:textSize="15sp"
+            android:layout_height="57dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:backgroundTint="@color/chocolate_brown"
+            android:text="@string/month_expenses" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_list_empty"
+        android:layout_width="283dp"
+        android:layout_height="82dp"
+        android:fontFamily="@font/pacifico_egular"
+        android:text="@string/list_is_empty"
+        android:textSize="35sp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reycler_expenses"
+        android:layout_width="402dp"
+        android:layout_height="639dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

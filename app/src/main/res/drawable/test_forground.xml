@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- وقتی حالت checked است -->
+    <item
+        android:color="@color/chocolate_brown"
+        android:state_checked="true"
+        android:background="@color/chocolate_brown"/>
+
+    <!-- وقتی حالت checked نیست -->
+    <item
+        android:color="@color/taupe"
+        android:state_checked="false"
+        android:background="@color/taupe"/>
+</selector>

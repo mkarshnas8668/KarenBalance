@@ -3,7 +3,20 @@
     <style name="Base.Theme.KarenBalance" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- رنگ اصلی -->
+        <item name="colorPrimary">@color/caramel</item>
+
+        <item name="android:windowBackground">@color/light_beige</item>
+
+        <!-- رنگ نوار وضعیت -->
+        <item name="android:statusBarColor">@color/caramel</item>
+
+        <!-- رنگ نوار ناوبری -->
+        <item name="android:navigationBarColor">@color/caramel</item>
     </style>
 
+
     <style name="Theme.KarenBalance" parent="Base.Theme.KarenBalance" />
+
+
 </resources>

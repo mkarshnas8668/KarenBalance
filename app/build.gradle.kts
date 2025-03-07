@@ -82,7 +82,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.3.0")
 
     // Rive Animation (در صورت نیاز)
-    implementation("app.rive:rive-android:8.7.0")
+    implementation("app.rive:rive-android:9.6.5")
     implementation("androidx.startup:startup-runtime:1.1.1")
 
 }

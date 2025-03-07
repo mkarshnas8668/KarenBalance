@@ -24,7 +24,7 @@
         android:id="@+id/anim_saving_daily"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -53,7 +53,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -63,6 +63,16 @@
         app:riveResource="@raw/state_machine_saving"
         android:layerType="hardware"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="175dp"
+        android:layout_height="167dp"
+        android:outlineAmbientShadowColor="@color/red"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_save_daily" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

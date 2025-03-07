@@ -18,4 +18,6 @@
     <string name="month_expenses">This month\'s expenses</string>
     <string name="list_is_empty">List Is Empty</string>
     <string name="average_daily_spending_amount_on_the_chart">Average daily spending amount on the chart</string>
+    <string name="amount_saved_today">Amount saved today</string>
+    <string name="amount_saved_this_month">Amount saved this month</string>
 </resources>

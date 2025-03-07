@@ -33,7 +33,7 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
 
         Rive.init(requireContext())
 
-
+        binding.txtSaveDaily.visibility = View.INVISIBLE
 
 //        show animation write save today and monthly ............
         AnimationWrite.showAnimTitle(binding.txtSaveDaily, "Amount saved today")

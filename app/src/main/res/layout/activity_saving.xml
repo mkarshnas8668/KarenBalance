@@ -12,6 +12,7 @@
         android:id="@+id/txt_save_daily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/pacifico_egular"
         android:textSize="24sp"
@@ -37,6 +38,8 @@
         android:id="@+id/anim_saving_daily"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_marginTop="-10dp"
+        android:layerType="hardware"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,18 +48,16 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_save_daily"
         app:layout_constraintVertical_bias="0.037"
         app:riveAutoPlay="false"
-        app:riveResource="@raw/state_machine_saving"
-        android:layerType="hardware"/>
+        app:riveResource="@raw/state_machine_saving" />
 
 
     <TextView
         android:id="@+id/txt_save_monthly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:fontFamily="@font/pacifico_egular"
-        android:layout_marginTop="16dp"
         android:text="@string/amount_saved_this_month"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/anim_saving_daily" />
@@ -79,7 +80,7 @@
         android:id="@+id/anim_saving_monthly"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="16dp"
+        android:layerType="hardware"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +88,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_save_monthly"
         app:riveAutoPlay="false"
-        app:riveResource="@raw/state_machine_saving"
-        android:layerType="hardware"/>
+        app:riveResource="@raw/state_machine_saving" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

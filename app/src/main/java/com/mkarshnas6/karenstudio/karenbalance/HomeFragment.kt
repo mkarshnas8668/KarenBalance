@@ -117,6 +117,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 pieChart_daily.setEntryLabelTextSize(20f)
 
 
+
                 val entries_daily: ArrayList<PieEntry> = ArrayList()
                 val chart_colors_daily: ArrayList<Int> = ArrayList()
 
@@ -205,6 +206,14 @@ class HomeFragment : Fragment(R.layout.activity_home) {
 
                 totalExpenseMonthly = expenses.sumOf { it.price }
 
+                if (totalExpenseMonthly > monthly_income) {
+                    totalExpenseToday = dailySpendingLimit
+                    binding.pieChartDaily.setTouchEnabled(false)
+                    binding.pieChartDaily.alpha = 0.3f
+                    binding.txtDailySpentIncome.text = "${getString(R.string.daily_spent_income)} - Unspent: \n0 - over limited !!"
+                    binding.txtDailySpentIncome.setTextColor(requireContext().getColor(R.color.red))
+                    binding.txtDailySpentIncome.alpha = 0.5f
+                }
                 //  ............   config for Pie chart monthly  .......................
                 pieChart_monthly = binding.pieChartMonthly
                 pieChart_monthly.setUsePercentValues(true)

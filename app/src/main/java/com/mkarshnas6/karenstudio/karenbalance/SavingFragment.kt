@@ -47,7 +47,12 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
                 totalExpenseToday = expenses.sumOf { it.price }
                 val totalExpenseTodayPercent = (totalExpenseToday.toFloat() / dailySpendingLimit) * 100
 
-                binding.txtSaveDaily.text = "${getString(R.string.amount_saved_today)} :\n ${100-totalExpenseTodayPercent.toInt()}%"
+//                check if get up of limit dont show mines
+                if (100-totalExpenseTodayPercent.toInt() >= 0)
+                    binding.txtSaveDaily.text = "${getString(R.string.amount_saved_today)} :\n ${100-totalExpenseTodayPercent.toInt()}%"
+                else
+                    binding.txtSaveDaily.text = "${getString(R.string.amount_saved_today)} :\n 0%"
+
                 binding.animSavingDaily.setNumberState("anim saving", "expen", totalExpenseTodayPercent)
                 AnimationWrite.showAnimTitle(binding.txtSaveDaily, binding.txtSaveDaily.text.toString())
 
@@ -62,8 +67,13 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
                 totalExpenseMonthly = expenses.sumOf { it.price }
                 val totalExpenseMonthlyPercent = (totalExpenseMonthly.toFloat() / monthly_income) * 100
 
-                binding.txtSaveMonthly.text = "${getString(R.string.amount_saved_this_month)} :\n ${100-totalExpenseMonthlyPercent.toInt()}%"
+                if (100-totalExpenseMonthlyPercent.toInt() >= 0)
+                    binding.txtSaveMonthly.text = "${getString(R.string.amount_saved_this_month)} :\n ${100 - totalExpenseMonthlyPercent.toInt()}%"
+                else
+                    binding.txtSaveMonthly.text = "${getString(R.string.amount_saved_this_month)} :\n 0%"
+
                 binding.animSavingMonthly.setNumberState("anim saving", "expen", totalExpenseMonthlyPercent)
+
                 AnimationWrite.showAnimTitle(binding.txtSaveMonthly, binding.txtSaveMonthly.text.toString())
 
             }, { error -> error.printStackTrace() })
@@ -74,7 +84,6 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
             binding.progressBarMontly.visibility = View.INVISIBLE
             binding.animSavingDaily.visibility = View.VISIBLE
             binding.animSavingMonthly.visibility = View.VISIBLE
-            binding.animSavingMonthly.setNumberState("anim saving", "expen", 10f)
         }, 1000)
 
         return binding.root

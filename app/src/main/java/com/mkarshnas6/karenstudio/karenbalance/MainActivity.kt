@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
 //        send information daily to monthly db
         val db = DBHandler.getDatabase(this)
 
@@ -92,12 +93,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }, { error ->
-                Toast.makeText(
-                    this,
-                    "Error fetching data: ${error.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            })
+                Toast.makeText(this, "Error fetching data: ${error.message}", Toast.LENGTH_LONG).show() })
 
         // تغییر رنگ نوار وضعیت و نوار ناوبری
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -159,6 +155,7 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             // Permission has already been granted
+            Toast.makeText(this, "❌❌❌❌", Toast.LENGTH_SHORT).show()
         }
 
     }

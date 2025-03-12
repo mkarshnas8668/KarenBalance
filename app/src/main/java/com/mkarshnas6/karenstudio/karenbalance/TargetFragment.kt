@@ -20,9 +20,6 @@ class TargetFragment : Fragment(R.layout.activity_target) {
     ): View {
         binding = ActivityTargetBinding.inflate(inflater)
 
-        binding.imageView6.setOnClickListener {
-            Toast.makeText(context, "Target Fragment", Toast.LENGTH_SHORT).show()
-        }
 
         return binding.root
     }

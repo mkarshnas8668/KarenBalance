@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             // Permission has already been granted
-            Toast.makeText(this, "❌❌❌❌", Toast.LENGTH_SHORT).show()
         }
 
     }

@@ -97,13 +97,13 @@ class MainActivity : AppCompatActivity() {
 
         // تغییر رنگ نوار وضعیت و نوار ناوبری
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.caramel)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.highlights)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.caramel)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.highlights)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.caramel)
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.highlights)
         }
 
 //        do Setting for All fragments .............

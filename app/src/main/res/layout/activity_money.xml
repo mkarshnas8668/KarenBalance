@@ -22,7 +22,7 @@
 
         <Button
             android:id="@+id/btn_list_daily_expense"
-            android:textColor="@color/caramel"
+            android:textColor="@color/highlights"
             android:layout_width="0dp"
             android:layout_height="57dp"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
 
         <Button
             android:id="@+id/btn_list_monthly_expense"
-            android:textColor="@color/caramel"
+            android:textColor="@color/highlights"
             android:layout_width="0dp"
             android:fontFamily="@font/pacifico_egular"
             android:textSize="15sp"

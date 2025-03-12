@@ -5,13 +5,15 @@
     <color name="red">#FF0000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="chocolate_brown">#3C2814</color> <!-- قهوه‌ای شکلاتی -->
-    <color name="caramel">#D28C46</color> <!-- کارامل -->
-    <color name="light_beige">#F5F5DC</color> <!-- بژ روشن -->
-    <color name="light_beige_dark">#CC8F35</color> <!-- بژ روشن -->
-    <color name="mocha_brown">#503C28</color> <!-- قهوه‌ای موکا -->
-    <color name="taupe">#6E5A46</color> <!-- تاوپ -->
-    <color name="highlights">#D28C46</color> <!-- رنگ عناصر برجسته -->
+    <color name="chocolate_brown">#20444E</color> <!-- آبی نفتی ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
+    <color name="caramel">#4A7F92</color> <!-- آبی اقیانوسی ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
+    <color name="light_beige">#E7F0F4</color> <!-- آبی آسمانی روشن، کمی کم‌رنگ‌تر -->
+    <color name="light_beige_dark">#5D8493</color> <!-- سبزآبی ملایم، کمی تیره‌تر -->
+    <color name="mocha_brown">#4C8C98</color> <!-- آبی درباری ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
+    <color name="taupe">#4B7C8D</color> <!-- آبی فولادی ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
+    <color name="highlights">#5F9EB2</color> <!-- آبی فیروزه‌ای ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
+
+
 
 
     <color name="green_200">#0F9D58</color>

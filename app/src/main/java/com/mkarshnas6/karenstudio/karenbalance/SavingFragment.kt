@@ -80,8 +80,8 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
 
 
         Handler(Looper.getMainLooper()).postDelayed({
-            binding.progressBarDaily.visibility = View.INVISIBLE
-            binding.progressBarMontly.visibility = View.INVISIBLE
+            binding.progressBarDaily.visibility = View.GONE
+            binding.progressBarMonthly.visibility = View.GONE
             binding.animSavingDaily.visibility = View.VISIBLE
             binding.animSavingMonthly.visibility = View.VISIBLE
         }, 1000)

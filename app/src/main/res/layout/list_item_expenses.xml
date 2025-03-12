@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:background="@drawable/back_list_item_recycle"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp"
+    android:elevation="4dp"> <!-- سایه اضافه شده -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_edit_report_expense"
@@ -15,14 +16,11 @@
         android:backgroundTint="@color/highlights"
         android:contentDescription="@string/btn_edit"
         android:src="@drawable/ic_edit"
-        app:backgroundTint="@color/chocolate_brown"
-        app:borderWidth="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:maxImageSize="26dp"
-        app:tint="@color/chocolate_brown" />
+        app:maxImageSize="20dp" />
 
     <TextView
         android:id="@+id/txt_price"
@@ -51,6 +49,7 @@
             android:id="@+id/txt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
             android:text="مبلغ یک میلیون تومان به شرح زیر خرج شده است:400,000 تومان برای خرید مواد غذایی از جمله نان، برنج، روغن، و سایر اقلام ضروری صرف شده است. 100,000 تومان برای هزینه‌های حمل‌ونقل شامل تاکسی، اتوبوس یا سوخت خودرو پرداخت شده است. 150,000 تومان به تفریحات اختصاص داده شده که شامل صرف غذا در رستوران و نوشیدنی در کافه می‌شود. 50,000 تومان نیز برای سرگرمی‌هایی مانند خرید بلیت سینما یا پرداخت هزینه فعالیت‌های تفریحی هزینه شده است. 200,000 تومان برای پرداخت قبوض مختلف مانند آب، برق، گاز و اینترنت استفاده شده است. 50,000 تومان به خرید لوازم بهداشتی مانند شامپو و صابون اختصاص یافته است. در نهایت، 50,000 تومان به عنوان پس‌انداز به حساب بانکی منتقل شده است."

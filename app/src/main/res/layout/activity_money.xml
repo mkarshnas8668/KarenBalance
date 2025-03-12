@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_beige"
-
     tools:context=".MoneyFragment">
 
     <LinearLayout
@@ -20,29 +18,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <!-- MaterialButton with rounded corners -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_list_daily_expense"
-            android:textColor="@color/highlights"
+            android:textColor="@color/chocolate_brown"
             android:layout_width="0dp"
             android:layout_height="57dp"
             android:layout_weight="1"
+            android:layout_margin="5dp"
             android:fontFamily="@font/pacifico_egular"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:backgroundTint="@color/chocolate_brown"
-            android:text="@string/today_expenses" />
+            android:backgroundTint="@color/highlights"
+            android:text="@string/today_expenses"
+            app:cornerRadius="10dp" /> <!-- Set the corner radius here -->
 
-        <Button
+        <!-- MaterialButton with rounded corners -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_list_monthly_expense"
-            android:textColor="@color/highlights"
+            android:textColor="@color/chocolate_brown"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:fontFamily="@font/pacifico_egular"
             android:textSize="15sp"
             android:layout_height="57dp"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:backgroundTint="@color/chocolate_brown"
-            android:text="@string/month_expenses" />
+            android:backgroundTint="@color/highlights"
+            android:text="@string/month_expenses"
+            app:cornerRadius="10dp" /> <!-- Set the corner radius here -->
     </LinearLayout>
 
     <TextView
@@ -66,6 +70,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

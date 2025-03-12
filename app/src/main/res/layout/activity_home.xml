@@ -1,228 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_beige"
     tools:context=".HomeFragment">
 
-
     <TextView
         android:id="@+id/txt_title_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_views"
-        android:fontFamily="@font/pacifico_egular"
-        android:padding="3dp"
-        android:shadowColor="@color/black"
-        android:shadowDx="12"
-        android:shadowDy="10"
-        android:shadowRadius="6"
+        android:layout_margin="16dp"
         android:text="@string/home_page"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:fontFamily="@font/pacifico_egular"
-        android:text="@string/monthly_income_nameBank"
-        android:textAlignment="center"
         android:textColor="@color/chocolate_brown"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_monthly_income"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout_monthly_income"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_monthly_income"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title_home">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_edit_monthly_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/highlights"
-            android:contentDescription="@string/btn_edit"
-            app:backgroundTint="@color/chocolate_brown"
-            android:src="@drawable/ic_edit"
-            app:borderWidth="3dp"
-            app:maxImageSize="26dp"
-            app:tint="@color/chocolate_brown" />
-
-        <HorizontalScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:scrollbarStyle="outsideInset"
-            android:scrollbars="horizontal">
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_edit_monthly_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/highlights"
+                android:src="@drawable/ic_edit" />
 
             <TextView
                 android:id="@+id/txt_show_monthly_income"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/back_view_border"
-                android:fontFamily="@font/pacifico_egular"
-                android:gravity="center"
-                android:minWidth="320dp"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="@string/hide_monthly_income"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
-                app:layout_constraintWidth_percent="0.9" />
+                android:textSize="20sp"
+                android:textColor="@color/chocolate_brown" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        </HorizontalScrollView>
-
-
-    </LinearLayout>
-<!--    for show name bank and edit that   -->
-
-    <LinearLayout
-        android:id="@+id/linearLayout_name_bank"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_name_bank"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_monthly_income"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_monthly_income">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_edit_name_bank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/highlights"
-            android:contentDescription="@string/btn_edit"
-            android:src="@drawable/ic_edit"
-            app:backgroundTint="@color/chocolate_brown"
-            app:borderWidth="3dp"
-            app:maxImageSize="26dp"
-            app:tint="@color/chocolate_brown" />
-
-        <HorizontalScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:scrollbarStyle="outsideInset"
-            android:scrollbars="horizontal">
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_edit_name_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/highlights"
+                android:src="@drawable/ic_edit" />
 
             <TextView
                 android:id="@+id/txt_show_name_bank"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/back_view_border"
-                android:fontFamily="@font/pacifico_egular"
-                android:gravity="center"
-                android:minWidth="320dp"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="@string/name_bank"
+                android:textSize="20sp"
+                android:textColor="@color/chocolate_brown" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- CardView برای نمودار هزینه‌های روزانه -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_daily_spent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_name_bank"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_daily_spent_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pacifico_egular"
+                android:text="@string/daily_spent_income"
                 android:textAlignment="center"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
-                app:layout_constraintWidth_percent="0.9" />
+                android:textColor="@color/chocolate_brown"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-        </HorizontalScrollView>
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart_daily"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center" />
 
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/txt_daily_spent_income"
+    <!-- CardView برای نمودار هزینه‌های ماهانه -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_monthly_spent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:fontFamily="@font/pacifico_egular"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="@string/daily_spent_income"
-        android:textAlignment="center"
-        android:textColor="@color/chocolate_brown"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_daily_spent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name_bank"
-        app:layout_constraintVertical_bias="0.018" />
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart_daily"
-        android:layout_width="238dp"
-        android:layout_height="195dp"
-        android:layout_below="@id/txt_daily_spent_income"
-        android:layout_centerHorizontal="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_daily_spent_income"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/txt_monthly_spent_income"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/pacifico_egular"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="@string/monthly_spent_income"
-        android:textAlignment="center"
-        android:textColor="@color/chocolate_brown"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pieChart_daily" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart_monthly"
-        android:layout_width="238dp"
-        android:layout_height="195dp"
-        android:layout_below="@id/txt_daily_spent_income"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_monthly_spent_income"
-        app:layout_constraintVertical_bias="0.104"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/txt_monthly_spent_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pacifico_egular"
+                android:text="@string/monthly_spent_income"
+                android:textAlignment="center"
+                android:textColor="@color/chocolate_brown"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart_monthly"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

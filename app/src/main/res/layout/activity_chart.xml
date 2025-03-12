@@ -5,31 +5,50 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartFragment"
-    android:background="@color/light_beige">
+    android:background="@color/light_beige"
+    tools:context=".ChartFragment">
 
-    <TextView
-        android:id="@+id/txt_title_charts"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pacifico_egular"
-        android:text="@string/average_daily_spending_amount_on_the_chart"
-        android:textSize="20sp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/card_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_width="411dp"
-        android:layout_height="631dp"
-        android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/txt_title_charts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pacifico_egular"
+            android:padding="16dp"
+            android:gravity="center"
+            android:text="@string/average_daily_spending_amount_on_the_chart"
+            android:textSize="20sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_chart"
+        android:layout_width="0dp"
+        android:layout_height="660dp"
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title_charts" />
+        app:layout_constraintTop_toBottomOf="@+id/card_title">
 
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

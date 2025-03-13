@@ -4,6 +4,7 @@
     <color name="blue">#2196F3</color>
     <color name="red">#FF0000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="img_dark">#89000000</color>
 
     <color name="chocolate_brown">#20444E</color> <!-- آبی نفتی ملایم با ته‌رنگ سبز، کمی روشن‌تر -->
     <color name="caramel">#4A7F92</color> <!-- آبی اقیانوسی ملایم با ته‌رنگ سبز، کمی روشن‌تر -->

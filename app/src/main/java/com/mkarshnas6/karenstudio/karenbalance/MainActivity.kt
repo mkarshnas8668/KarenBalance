@@ -4,16 +4,21 @@ package com.mkarshnas6.karenstudio.karenbalance
 import PersianDate
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.InputType
 import android.view.Gravity
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,8 +26,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.textfield.TextInputLayout
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivityMainBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 import com.mkarshnas6.karenstudio.karenbalance.db.model.DailyEntity
@@ -40,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val SMS_PERMISSION_REQUEST_CODE = 1
     private val PERMISSIONS_RECEIVE_SMS = 101
-
+    private lateinit var image_alert:ImageView
     private val persian_date_today: String
         get() = PersianDate.getPersianDateToday()
 
@@ -114,8 +121,8 @@ class MainActivity : AppCompatActivity() {
 
 //        set action work btn add reports
         binding.actionBtnAddSpent.setOnClickListener { show_alert_add_report() }
-        binding.actionBtnAddTarget.setOnClickListener {
-            Toast.makeText(this, "add Target", Toast.LENGTH_SHORT).show() }
+
+        binding.actionBtnAddTarget.setOnClickListener {show_alert_new_target()}
         
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.nav_money) {
@@ -171,6 +178,133 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    @SuppressLint("CheckResult")
+    fun show_alert_new_target() {
+        val builderAlert = AlertDialog.Builder(this, R.style.Base_Theme_KarenBalance)
+        builderAlert.setTitle("Add New Target")
+
+        val layoutAlertDialog = LinearLayout(this)
+        layoutAlertDialog.orientation = LinearLayout.VERTICAL
+        layoutAlertDialog.gravity = Gravity.CENTER
+        layoutAlertDialog.setPadding(32, 32, 32, 32)
+
+        val nameTextInputLayout = TextInputLayout(this)
+        nameTextInputLayout.hint = "Enter name"
+        nameTextInputLayout.setPadding(10, 10, 10, 10)
+        val nameEditText = EditText(this)
+        nameEditText.setTextColor(ContextCompat.getColor(this, R.color.black))
+        nameEditText.setBackgroundResource(R.drawable.back_view_border)
+        nameEditText.textSize = 20f
+        nameTextInputLayout.addView(nameEditText)
+
+        val nameLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        nameLayoutParams.topMargin = 50
+        nameTextInputLayout.layoutParams = nameLayoutParams
+
+        val priceTextInputLayout = TextInputLayout(this)
+        priceTextInputLayout.hint = "Enter price"
+        priceTextInputLayout.setPadding(10, 10, 10, 10)
+        val priceEditText = EditText(this)
+        priceEditText.setTextColor(ContextCompat.getColor(this, R.color.black))
+        priceEditText.inputType = InputType.TYPE_CLASS_NUMBER
+        priceEditText.setBackgroundResource(R.drawable.back_view_border)
+        priceEditText.textSize = 18f
+        priceTextInputLayout.addView(priceEditText)
+
+        val priceLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        priceLayoutParams.topMargin = 30
+        priceTextInputLayout.layoutParams = priceLayoutParams
+
+        val necessaryCheckBox = CheckBox(this)
+        necessaryCheckBox.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
+        necessaryCheckBox.text = "Is it necessary ?"
+        necessaryCheckBox.setPadding(10, 10, 10, 20)
+
+        val necessaryLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        necessaryLayoutParams.topMargin = 20
+        necessaryCheckBox.layoutParams = necessaryLayoutParams
+
+        val imageView = ImageView(this)
+        image_alert = imageView
+        imageView.setImageResource(android.R.drawable.ic_menu_camera)
+        imageView.setContentDescription("Select an image")
+        imageView.setPadding(10, 10, 10, 10)
+        imageView.setBackgroundResource(R.drawable.back_view_border)
+
+        val imageLayoutParams = LinearLayout.LayoutParams(350, 350)
+        imageLayoutParams.topMargin = 40
+        imageView.layoutParams = imageLayoutParams
+        imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+
+        layoutAlertDialog.addView(nameTextInputLayout)
+        layoutAlertDialog.addView(priceTextInputLayout)
+        layoutAlertDialog.addView(necessaryCheckBox)
+        layoutAlertDialog.addView(imageView)
+
+        builderAlert.setView(layoutAlertDialog)
+
+        builderAlert.setPositiveButton("Save") { dialog, _ ->
+            val name = nameEditText.text.toString()
+            val price = priceEditText.text.toString()
+            val isNecessary = necessaryCheckBox.isChecked
+            Toast.makeText(this, "Saved: Name: $name, Price: $price, Necessary: $isNecessary", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        val dialogMonthlyIncome = builderAlert.create()
+        dialogMonthlyIncome.setCancelable(false)
+        dialogMonthlyIncome.setCanceledOnTouchOutside(false)
+        dialogMonthlyIncome.show()
+
+        val positiveButton = dialogMonthlyIncome.getButton(AlertDialog.BUTTON_POSITIVE)
+        val layoutParamsButton = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        positiveButton.layoutParams = layoutParamsButton
+        positiveButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+        positiveButton.setBackgroundColor(ContextCompat.getColor(this, R.color.caramel))
+        positiveButton.textSize = 18f
+
+        imageView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, IMAGE_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val imageUri = data.data
+            imageUri?.let {
+                image_alert.setImageURI(it)
+                image_alert.tag = it
+
+                image_alert.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+        }
+    }
+
+    companion object {
+        private const val IMAGE_REQUEST_CODE = 1001
+    }
+
+
+
+
 
     @SuppressLint("CheckResult")
     fun show_alert_descriptions_null(

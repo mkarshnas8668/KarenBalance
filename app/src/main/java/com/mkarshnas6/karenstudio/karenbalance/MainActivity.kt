@@ -114,12 +114,25 @@ class MainActivity : AppCompatActivity() {
 
 //        set action work btn add reports
         binding.actionBtnAddSpent.setOnClickListener { show_alert_add_report() }
-
+        binding.actionBtnAddTarget.setOnClickListener {
+            Toast.makeText(this, "add Target", Toast.LENGTH_SHORT).show() }
+        
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.nav_money)
+            if (destination.id == R.id.nav_money) {
                 binding.actionBtnAddSpent.visibility = View.VISIBLE
-            else
+
+                binding.actionBtnAddSpent.translationY = 500f
+                binding.actionBtnAddSpent.animate().translationY(0f).alpha(1f).setDuration(300).start()
+            }else
                 binding.actionBtnAddSpent.visibility = View.GONE
+
+            if (destination.id == R.id.nav_target) {
+                binding.actionBtnAddTarget.visibility = View.VISIBLE
+
+                binding.actionBtnAddTarget.translationY = 500f
+                binding.actionBtnAddTarget.animate().translationY(0f).alpha(1f).setDuration(300).start()
+            }else
+                binding.actionBtnAddTarget.visibility = View.GONE
         }
 
 //        call function for check permissions ........

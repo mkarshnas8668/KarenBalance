@@ -8,9 +8,10 @@ import com.mkarshnas6.karenstudio.karenbalance.db.Dao.DailyDAO
 import com.mkarshnas6.karenstudio.karenbalance.db.Dao.ReportDAO
 import com.mkarshnas6.karenstudio.karenbalance.db.model.DailyEntity
 import com.mkarshnas6.karenstudio.karenbalance.db.model.ReportEntity
+import com.mkarshnas6.karenstudio.karenbalance.db.model.TargetEntity
 
 @Database(
-    entities = [ReportEntity::class, DailyEntity::class],
+    entities = [ReportEntity::class, DailyEntity::class,TargetEntity::class],
     version = DBHandler.DATABASE_VERSION
 )
 abstract class DBHandler : RoomDatabase() {
@@ -20,10 +21,11 @@ abstract class DBHandler : RoomDatabase() {
 
     companion object {
         private const val DATABASE_NAME = "mainDB_karenBalance"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
 
         const val REPORT_TABLE = "reportTable"
         const val DAILY_TABLE = "dailyTable"
+        const val TARGET_TABLE = "targetTable"
 
         private var INSTANCE: DBHandler? = null
 

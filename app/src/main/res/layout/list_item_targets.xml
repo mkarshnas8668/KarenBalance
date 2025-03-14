@@ -39,7 +39,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/txt_title_target"
+            android:id="@+id/txt_name_target"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pacifico_egular"
@@ -61,9 +61,9 @@
             android:background="@drawable/gradient_line"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            app:layout_constraintEnd_toEndOf="@id/txt_title_target"
-            app:layout_constraintStart_toStartOf="@id/txt_title_target"
-            app:layout_constraintTop_toBottomOf="@id/txt_title_target" />
+            app:layout_constraintEnd_toEndOf="@id/txt_name_target"
+            app:layout_constraintStart_toStartOf="@id/txt_name_target"
+            app:layout_constraintTop_toBottomOf="@id/txt_name_target" />
 
         <TextView
             android:id="@+id/txt_description_target"

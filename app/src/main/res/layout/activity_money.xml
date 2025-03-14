@@ -12,7 +12,6 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,31 +20,31 @@
         <!-- MaterialButton with rounded corners -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_list_daily_expense"
-            android:textColor="@color/chocolate_brown"
             android:layout_width="0dp"
             android:layout_height="57dp"
-            android:layout_weight="1"
             android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/highlights"
             android:fontFamily="@font/pacifico_egular"
+            android:text="@string/today_expenses"
+            android:textColor="@color/chocolate_brown"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:backgroundTint="@color/highlights"
-            android:text="@string/today_expenses"
             app:cornerRadius="10dp" /> <!-- Set the corner radius here -->
 
         <!-- MaterialButton with rounded corners -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_list_monthly_expense"
-            android:textColor="@color/chocolate_brown"
-            android:layout_margin="5dp"
             android:layout_width="0dp"
-            android:fontFamily="@font/pacifico_egular"
-            android:textSize="15sp"
             android:layout_height="57dp"
-            android:textStyle="bold"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:backgroundTint="@color/highlights"
+            android:fontFamily="@font/pacifico_egular"
             android:text="@string/month_expenses"
+            android:textColor="@color/chocolate_brown"
+            android:textSize="15sp"
+            android:textStyle="bold"
             app:cornerRadius="10dp" /> <!-- Set the corner radius here -->
     </LinearLayout>
 
@@ -64,11 +63,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reycler_expenses"
-        android:layout_width="402dp"
-        android:layout_height="639dp"
+        android:layout_width="393dp"
+        android:layout_height="718dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

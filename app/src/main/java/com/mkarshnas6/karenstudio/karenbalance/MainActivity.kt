@@ -9,15 +9,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.InputType
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -33,10 +36,14 @@ import com.google.android.material.textfield.TextInputLayout
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivityMainBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 import com.mkarshnas6.karenstudio.karenbalance.db.model.DailyEntity
+import com.mkarshnas6.karenstudio.karenbalance.db.model.TargetEntity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.w3c.dom.Text
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var image_alert:ImageView
     private val persian_date_today: String
         get() = PersianDate.getPersianDateToday()
+    private var selectedImageUri: Uri? = null
 
 
     private val appPermission =
@@ -182,7 +190,25 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     fun show_alert_new_target() {
         val builderAlert = AlertDialog.Builder(this, R.style.Base_Theme_KarenBalance)
-        builderAlert.setTitle("Add New Target")
+
+        val titleLayout = LinearLayout(this)
+        titleLayout.orientation = LinearLayout.HORIZONTAL
+        titleLayout.gravity = Gravity.START
+        titleLayout.setPadding(32, 32, 32, 32)
+
+        val titleTextView = TextView(this)
+        titleTextView.text = "Add New Target"
+        titleTextView.textSize = 20f
+        titleTextView.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
+
+        val titleLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        titleLayoutParams.topMargin = 20
+        titleTextView.layoutParams = titleLayoutParams
+
+        titleLayout.addView(titleTextView)
 
         val layoutAlertDialog = LinearLayout(this)
         layoutAlertDialog.orientation = LinearLayout.VERTICAL
@@ -193,46 +219,43 @@ class MainActivity : AppCompatActivity() {
         nameTextInputLayout.hint = "Enter name"
         nameTextInputLayout.setPadding(10, 10, 10, 10)
         val nameEditText = EditText(this)
-        nameEditText.setTextColor(ContextCompat.getColor(this, R.color.black))
+        nameEditText.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
         nameEditText.setBackgroundResource(R.drawable.back_view_border)
         nameEditText.textSize = 20f
         nameTextInputLayout.addView(nameEditText)
-
         val nameLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        nameLayoutParams.topMargin = 50
+        nameLayoutParams.topMargin = 20
         nameTextInputLayout.layoutParams = nameLayoutParams
 
         val priceTextInputLayout = TextInputLayout(this)
         priceTextInputLayout.hint = "Enter price"
         priceTextInputLayout.setPadding(10, 10, 10, 10)
         val priceEditText = EditText(this)
-        priceEditText.setTextColor(ContextCompat.getColor(this, R.color.black))
+        priceEditText.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
         priceEditText.inputType = InputType.TYPE_CLASS_NUMBER
         priceEditText.setBackgroundResource(R.drawable.back_view_border)
         priceEditText.textSize = 18f
         priceTextInputLayout.addView(priceEditText)
-
         val priceLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        priceLayoutParams.topMargin = 30
+        priceLayoutParams.topMargin = 20
         priceTextInputLayout.layoutParams = priceLayoutParams
 
         val necessaryCheckBox = CheckBox(this)
         necessaryCheckBox.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
         necessaryCheckBox.text = "Is it necessary ?"
         necessaryCheckBox.setPadding(10, 10, 10, 20)
-
-        val necessaryLayoutParams = LinearLayout.LayoutParams(
+        val checkboxLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        necessaryLayoutParams.topMargin = 20
-        necessaryCheckBox.layoutParams = necessaryLayoutParams
+        checkboxLayoutParams.topMargin = 50
+        necessaryCheckBox.layoutParams = checkboxLayoutParams
 
         val imageView = ImageView(this)
         image_alert = imageView
@@ -241,11 +264,13 @@ class MainActivity : AppCompatActivity() {
         imageView.setPadding(10, 10, 10, 10)
         imageView.setBackgroundResource(R.drawable.back_view_border)
 
-        val imageLayoutParams = LinearLayout.LayoutParams(350, 350)
-        imageLayoutParams.topMargin = 40
-        imageView.layoutParams = imageLayoutParams
+        imageView.layoutParams = LinearLayout.LayoutParams(350, 350)
         imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        val imageLayoutParams = imageView.layoutParams as LinearLayout.LayoutParams
+        imageLayoutParams.topMargin = 50
+        imageView.layoutParams = imageLayoutParams
 
+        layoutAlertDialog.addView(titleLayout)
         layoutAlertDialog.addView(nameTextInputLayout)
         layoutAlertDialog.addView(priceTextInputLayout)
         layoutAlertDialog.addView(necessaryCheckBox)
@@ -253,13 +278,7 @@ class MainActivity : AppCompatActivity() {
 
         builderAlert.setView(layoutAlertDialog)
 
-        builderAlert.setPositiveButton("Save") { dialog, _ ->
-            val name = nameEditText.text.toString()
-            val price = priceEditText.text.toString()
-            val isNecessary = necessaryCheckBox.isChecked
-            Toast.makeText(this, "Saved: Name: $name, Price: $price, Necessary: $isNecessary", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
-        }
+        builderAlert.setPositiveButton("Save", null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -267,11 +286,50 @@ class MainActivity : AppCompatActivity() {
         dialogMonthlyIncome.show()
 
         val positiveButton = dialogMonthlyIncome.getButton(AlertDialog.BUTTON_POSITIVE)
-        val layoutParamsButton = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
+        positiveButton.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, // عرض دکمه را به کل صفحه گسترش می‌دهد
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        positiveButton.layoutParams = layoutParamsButton
+
+        positiveButton.setOnClickListener {
+            val name = nameEditText.text.toString()
+            val price = priceEditText.text.toString()
+            val date = persian_date_today
+            val isNecessary = necessaryCheckBox.isChecked
+            val img = selectedImageUri?.let { saveImageToInternalStorage(it) } ?: "android.resource://${this.packageName}/drawable/luxe_home"
+
+
+            if (name.isEmpty()) {
+                Toast.makeText(this, "Name Is Empty !!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (price.isEmpty()) {
+                Toast.makeText(this, "Price Is Empty !!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            // Perform database operation in background thread
+            val db = DBHandler.getDatabase(context = this)
+            val InsertTarget = TargetEntity(
+                name = name,
+                price = price.toInt(),
+                date = date.toString(),
+                necessary = isNecessary,
+                img = img
+            )
+
+            Completable.fromAction {
+                db.targetDao().insertTarget(InsertTarget) // Save target in DB
+            }.subscribeOn(Schedulers.io()) // Ensure it's running on a background thread
+                .observeOn(AndroidSchedulers.mainThread()) // Back to UI thread after completion
+                .doOnTerminate {
+                    Toast.makeText(this, "Save Target Successfully ✔✔✔", Toast.LENGTH_SHORT).show()
+                    dialogMonthlyIncome.dismiss() // Close dialog when the task is finished
+                }
+                .subscribe()
+
+        }
+
         positiveButton.setTextColor(ContextCompat.getColor(this, R.color.white))
         positiveButton.setBackgroundColor(ContextCompat.getColor(this, R.color.caramel))
         positiveButton.textSize = 18f
@@ -280,21 +338,28 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, IMAGE_REQUEST_CODE)
         }
+
+        dialogMonthlyIncome.setOnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                true
+            } else { false }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            val imageUri = data.data
-            imageUri?.let {
-                image_alert.setImageURI(it)
-                image_alert.tag = it
+            selectedImageUri = data.data
 
-                image_alert.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
+            selectedImageUri?.let {
+                image_alert.setImageURI(it)
             }
+
+            image_alert.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         }
     }
 
@@ -302,8 +367,28 @@ class MainActivity : AppCompatActivity() {
         private const val IMAGE_REQUEST_CODE = 1001
     }
 
+    fun saveImageToInternalStorage(uri: Uri): String? {
+        try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val fileName = "image_${System.currentTimeMillis()}.jpg"
+            val file = File(filesDir, fileName)
+
+            val outputStream = FileOutputStream(file)
+            inputStream.copyTo(outputStream)
+
+            inputStream.close()
+            outputStream.close()
+
+            return file.absolutePath  // مسیر تصویر را برمی‌گرداند
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+    }
 
 
+
+//........... end function for show alert new Target ......................
 
 
     @SuppressLint("CheckResult")

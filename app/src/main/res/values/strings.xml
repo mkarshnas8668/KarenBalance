@@ -20,4 +20,6 @@
     <string name="average_daily_spending_amount_on_the_chart">Average daily spending amount on the chart</string>
     <string name="amount_saved_today">Amount saved today</string>
     <string name="amount_saved_this_month">Amount saved this month</string>
+    <string name="you_have">You have</string>
+    <string name="out_of">out of</string>
 </resources>

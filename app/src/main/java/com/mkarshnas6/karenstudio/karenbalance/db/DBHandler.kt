@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mkarshnas6.karenstudio.karenbalance.db.Dao.DailyDAO
 import com.mkarshnas6.karenstudio.karenbalance.db.Dao.ReportDAO
+import com.mkarshnas6.karenstudio.karenbalance.db.Dao.TargetDAO
 import com.mkarshnas6.karenstudio.karenbalance.db.model.DailyEntity
 import com.mkarshnas6.karenstudio.karenbalance.db.model.ReportEntity
 import com.mkarshnas6.karenstudio.karenbalance.db.model.TargetEntity
@@ -18,6 +19,7 @@ abstract class DBHandler : RoomDatabase() {
 
     abstract fun reportDao(): ReportDAO
     abstract fun dailyDao(): DailyDAO
+    abstract fun targetDao():TargetDAO
 
     companion object {
         private const val DATABASE_NAME = "mainDB_karenBalance"

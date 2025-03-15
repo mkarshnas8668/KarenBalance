@@ -58,26 +58,26 @@ class SmsReceiverService : Service() {
 
 
 
-                            Toast.makeText(
-                                this@SmsReceiverService,
-                                "ساعت : $formattedTime  || تاریخ : $persian_date_today ",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                            Toast.makeText(
-                                this@SmsReceiverService,
-                                "Money = $money_balance_change",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                this@SmsReceiverService,
+//                                "ساعت : $formattedTime  || تاریخ : $persian_date_today ",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//
+//                            Toast.makeText(
+//                                this@SmsReceiverService,
+//                                "Money = $money_balance_change",
+//                                Toast.LENGTH_LONG
+//                            ).show()
 // ....                           check name bank and sender with lower and space ..................
                             if (sender!!.lowercase().replace(" ", "") == name_bank!!.lowercase()
                                     .replace(" ", "")
                             ) {
-                                Toast.makeText(
-                                    this@SmsReceiverService,
-                                    "$sender : $body ",
-                                    Toast.LENGTH_LONG
-                                ).show()
+//                                Toast.makeText(
+//                                    this@SmsReceiverService,
+//                                    "$sender : $body ",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
 
 //                                Save Information daily spend in DB .....................................
                                 if (money_balance_change.replace(",", "").toInt() != 0) {

@@ -4,13 +4,11 @@ import PersianDate
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.provider.MediaStore
 import android.text.InputType
 import android.view.ContextThemeWrapper
 import android.view.Gravity
@@ -18,6 +16,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
@@ -237,6 +236,20 @@ class TargetsRecyclerAdapter(
             scaleType = ImageView.ScaleType.CENTER_INSIDE
         }
 
+        // Add a button or TextView to clear the image
+        val clearImageButton = Button(context).apply {
+            text = "Clear Image"
+            setTextColor(ContextCompat.getColor(context, R.color.red)) // Optional: Style the button
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = 20 }
+        }
+
+        clearImageButton.setOnClickListener {
+            imageView.setImageURI(null) // Clear the image from ImageView
+        }
+
         image_alert = imageView
 
         layoutAlertDialog.apply {
@@ -245,6 +258,7 @@ class TargetsRecyclerAdapter(
             addView(priceTextInputLayout)
             addView(necessaryCheckBox)
             addView(imageView)
+            addView(clearImageButton) // Add the clear button to the layout
         }
 
         builderAlert.setView(layoutAlertDialog)
@@ -265,7 +279,6 @@ class TargetsRecyclerAdapter(
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
         }
-
 
         positiveButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
@@ -317,7 +330,6 @@ class TargetsRecyclerAdapter(
                     { error -> error.printStackTrace() }
                 )
         }
-
 
         dialog.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {

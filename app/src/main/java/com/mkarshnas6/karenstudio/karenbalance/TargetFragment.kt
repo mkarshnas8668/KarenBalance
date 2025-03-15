@@ -42,14 +42,6 @@ class TargetFragment : Fragment(R.layout.activity_target) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ targets ->
 
-//                if (targets.isNotEmpty()) {
-//                    val latestExpense = targets[0].date
-//
-//                    if (latestExpense != persian_date_today) {
-//                        BroadcastEndDayReceiver.handleEndOfDayTasks(requireContext())
-//                    }
-//                }
-
                 if (targets.isEmpty()) {
                     binding.txtListEmptyTarget.visibility = View.VISIBLE
                 } else {

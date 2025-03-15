@@ -22,4 +22,7 @@
     <string name="amount_saved_this_month">Amount saved this month</string>
     <string name="you_have">You have</string>
     <string name="out_of">out of</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="main_target">Main Target</string>
 </resources>

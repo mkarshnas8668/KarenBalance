@@ -81,8 +81,12 @@ dependencies {
     // Google Play Services Auth
     implementation("com.google.android.gms:play-services-auth:21.3.0")
 
-    // Rive Animation (در صورت نیاز)
+    // Rive Animation
     implementation("app.rive:rive-android:9.6.5")
     implementation("androidx.startup:startup-runtime:1.1.1")
+
+//    fragment .............
+    implementation("androidx.activity:activity-ktx:1.6.0") // این کتابخانه برای استفاده از ActivityResultContracts نیاز است
+    implementation("androidx.fragment:fragment-ktx:1.5.0")
 
 }

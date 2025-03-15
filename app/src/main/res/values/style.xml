@@ -3,4 +3,14 @@
         <item name="cornerSize">26dp</item>
     </style>
 
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:backgroundTint">@color/light_beige</item>
+        <item name="android:textColor">@color/chocolate_brown</item>
+        <item name="android:textAlignment">center</item>
+        <item name="borderRound">17dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/pacifico_egular</item>
+    </style>
+
+
 </resources>

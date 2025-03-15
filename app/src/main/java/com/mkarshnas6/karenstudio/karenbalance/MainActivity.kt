@@ -324,7 +324,10 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread()) // Back to UI thread after completion
                 .doOnTerminate {
                     Toast.makeText(this, "Save Target Successfully ✔✔✔", Toast.LENGTH_SHORT).show()
-                    dialogMonthlyIncome.dismiss() // Close dialog when the task is finished
+                    dialogMonthlyIncome.dismiss()
+                    selectedImageUri = null
+                    image_alert.setImageResource(android.R.drawable.ic_menu_camera)
+
                 }
                 .subscribe()
 
@@ -363,9 +366,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val IMAGE_REQUEST_CODE = 1001
-    }
+    companion object { private const val IMAGE_REQUEST_CODE = 1001 }
 
     fun saveImageToInternalStorage(uri: Uri): String? {
         try {
@@ -385,8 +386,6 @@ class MainActivity : AppCompatActivity() {
             return null
         }
     }
-
-
 
 //........... end function for show alert new Target ......................
 

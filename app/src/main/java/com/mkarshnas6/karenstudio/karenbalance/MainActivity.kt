@@ -312,7 +312,7 @@ class MainActivity : AppCompatActivity() {
             val db = DBHandler.getDatabase(context = this)
             val InsertTarget = TargetEntity(
                 name = name,
-                price = price.toInt(),
+                price = price.toLong(),
                 date = date.toString(),
                 necessary = isNecessary,
                 img = img

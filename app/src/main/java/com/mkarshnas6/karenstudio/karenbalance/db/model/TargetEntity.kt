@@ -9,7 +9,7 @@ import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 data class TargetEntity (
     @PrimaryKey(autoGenerate = true) val id : Int = 0,
     @ColumnInfo val name : String = "Target",
-    @ColumnInfo val price : Int ,
+    @ColumnInfo val price : Long ,
     @ColumnInfo val date : String ,
     @ColumnInfo val necessary : Boolean,
     @ColumnInfo val progress : Int = 0,

@@ -4,6 +4,7 @@ import PersianDate
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -24,6 +25,7 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +51,9 @@ class TargetsRecyclerAdapter(
         get() = PersianDate.getPersianDateToday()
     private var selectedImageUri: Uri? = null
     private var image_alert: ImageView? = null
+    lateinit var pref: SharedPreferences
+    private var dailySpendingLimit = 0
+    private var totalExpenseMonthly = 0
 
     inner class TargetsViewHolder(
         private val binding: ListItemTargetsBinding
@@ -58,16 +63,23 @@ class TargetsRecyclerAdapter(
         fun bind(target: TargetEntity) {
             binding.txtNameTarget.text = target.name
             binding.txtDescriptionTarget.text =
-                "${context.getString(R.string.you_have)} 10,000 ${context.getString(R.string.out_of)} ${target.price}"
+                "${context.getString(R.string.you_have)} 10,000 ${context.getString(R.string.out_of)} ${
+                    target.price.toLong().format_number()
+                }"
             binding.txtDateTarget.text = target.date
             binding.txtShowProgress.text = "${target.progress} %"
             binding.progressBarTarget.progress = target.progress
 
-//            // Set image from gallery URI
             val imgPath = target.img
 
+            pref = context.getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
+
+            //        get monthly income .........
+            val monthly_income = pref.getLong("monthly_income", 1111111111)
+            dailySpendingLimit = (monthly_income / 31).toInt()
+            val saving_income = pref.getLong("saving_income",0)
+
             if (imgPath.startsWith("content://")) {
-                // اگر تصویر از گالری انتخاب شده باشد
                 try {
                     val inputStream = context.contentResolver.openInputStream(Uri.parse(imgPath))
                     val bitmap = BitmapFactory.decodeStream(inputStream)
@@ -300,7 +312,7 @@ class TargetsRecyclerAdapter(
                 return@setOnClickListener
             }
 
-            val price = priceText.toIntOrNull()
+            val price = priceText.toLongOrNull()
             if (price == null) {
                 Toast.makeText(context, "Invalid price!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
@@ -320,7 +332,8 @@ class TargetsRecyclerAdapter(
             }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate {
-                    Toast.makeText(context, "Update Target Successfully ✔✔✔", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Update Target Successfully ✔✔✔", Toast.LENGTH_SHORT)
+                        .show()
                     dialog.dismiss()
                     selectedImageUri = null
                     image_alert?.setImageResource(android.R.drawable.ic_menu_camera)

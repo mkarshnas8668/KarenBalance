@@ -24,22 +24,10 @@ class MyReceiver : BroadcastReceiver() {
 
     @SuppressLint("ObsoleteSdkInt")
     private fun checkAndSaveUserBalance(context: Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val notificationChannelId = "com.mkarshnas6.karenstudio.karenbalance"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(notificationChannelId, "Daily Reminder", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
-        }
+// .........    do end day works .................
+        BroadcastEndDayReceiver.handleEndOfDayTasks(context)
 
-        val notification = NotificationCompat.Builder(context, notificationChannelId)
-            .setSmallIcon(R.drawable.target)
-            .setContentTitle("KarenBalance Reminder")
-            .setContentText("Check your daily balance!")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .build()
-
-        notificationManager.notify(1, notification)
     }
 
 }

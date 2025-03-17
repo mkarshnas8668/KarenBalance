@@ -18,7 +18,7 @@ object AlarmScheduler {
         )
 
         val calendar: Calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 22) // تنظیم برای 10 شب
+        calendar.set(Calendar.HOUR_OF_DAY, 0) // hour 12 pm
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 
@@ -28,6 +28,7 @@ object AlarmScheduler {
         }
 
         // تنظیم آلارم تکراری روزانه
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 }
+

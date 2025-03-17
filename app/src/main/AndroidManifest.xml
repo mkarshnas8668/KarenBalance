@@ -35,7 +35,7 @@
         android:theme="@style/Theme.KarenBalance"
         tools:targetApi="31">
 
-        <!--    get the sms live ..... -->
+        <!--    دریافت پیامک‌ها -->
         <receiver
             android:name=".SmsReceiver"
             android:enabled="true"
@@ -51,7 +51,7 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
-        <!--   .......  service for delete db on 12PM ...........-->
+        <!--   سرویس برای حذف پایگاه داده در ۱۲ شب -->
         <receiver
             android:name=".BroadcastEndDayReceiver"
             android:exported="true"
@@ -61,12 +61,21 @@
             </intent-filter>
         </receiver>
 
+        <!-- 📌 دریافت آلارم در ۱۰ شب -->
+        <receiver
+            android:name=".MyReceiver"
+            android:exported="false"/>
 
-        <!-- ...........     end receiver ...........-->
-
+        <!-- 📌 تنظیم آلارم بعد از ریستارت گوشی -->
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Activities -->
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -86,6 +95,4 @@
         </provider>
 
     </application>
-
-
 </manifest>

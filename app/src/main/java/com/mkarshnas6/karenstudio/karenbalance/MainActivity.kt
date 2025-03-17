@@ -185,6 +185,9 @@ class MainActivity : AppCompatActivity() {
             // Permission has already been granted
         }
 
+//      for set and start Alarm scheduler ..............................
+        AlarmScheduler.scheduleAlarm(this)
+
     }
 
     @SuppressLint("CheckResult")

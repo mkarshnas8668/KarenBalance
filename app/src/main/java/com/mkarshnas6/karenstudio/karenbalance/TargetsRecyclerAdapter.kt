@@ -4,6 +4,7 @@ import PersianDate
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -59,7 +60,7 @@ class TargetsRecyclerAdapter(
         private val binding: ListItemTargetsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint("SetTextI18n", "DefaultLocale")
         fun bind(target: TargetEntity) {
             pref = context.getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
             //        get monthly income .........
@@ -67,15 +68,27 @@ class TargetsRecyclerAdapter(
             val monthly_income = pref.getLong("monthly_income", 1111111111)
             dailySpendingLimit = (monthly_income / 31).toInt()
             val saving_income = pref.getLong("saving_income",0)
+            val main_target = (pref.getString("main_target","0"))?.toInt()
 
             val percentage = if (target.price > 0) {
                 (saving_income.toFloat() / target.price.toFloat()) * 100
             } else { 0f }
 
-            binding.txtNameTarget.text = target.name
+            if (target.id != main_target) {
+                binding.txtNameTarget.setTextColor(context.getColor(R.color.white))
+                binding.txtNameTarget.text = target.name
+            }else{
+                binding.txtNameTarget.setTextColor(context.getColor(R.color.green_200))
+                binding.txtNameTarget.text = "${ target.name } ( Main )"
+            }
+
             binding.txtDateTarget.text = target.date
             if (percentage > 0) {
-                binding.txtShowProgress.text = "${percentage} %"
+                if (percentage <= 100)
+                    binding.txtShowProgress.text = String.format("%.2f %%", percentage)
+                else
+                    binding.txtShowProgress.text = "100 %"
+
                 binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
                 binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${saving_income} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
                 binding.progressBarTarget.progress = percentage.toInt()
@@ -136,7 +149,7 @@ class TargetsRecyclerAdapter(
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_main_target -> {
-                    onChangeMainTarget(target)
+                    onChangeMainTarget(context,target)
                     true
                 }
 
@@ -157,9 +170,22 @@ class TargetsRecyclerAdapter(
         popupMenu.show()
     }
 
-    fun onChangeMainTarget(target: TargetEntity) {
-        Toast.makeText(context, "change the main target !!", Toast.LENGTH_SHORT).show()
+    @SuppressLint("NotifyDataSetChanged")
+    fun onChangeMainTarget(context: Context, target: TargetEntity) {
+        AlertDialog.Builder(context)
+            .setTitle("Change Main Target")
+            .setMessage("Are you sure you want to set this as your main target?")
+            .setPositiveButton("OK") { _, _ ->
+                pref.edit().putString("main_target", target.id.toString()).apply()
+
+                notifyDataSetChanged()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
+
 
     fun onDeleteTarget(target: TargetEntity) {
         AlertDialog.Builder(context)

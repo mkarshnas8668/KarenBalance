@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import app.rive.runtime.kotlin.core.Rive
+import com.mkarshnas6.karenstudio.karenbalance.BroadcastEndDayReceiver.Companion
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivitySavingBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -36,6 +37,19 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
         pref = requireContext().getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
         val monthly_income = pref.getLong("monthly_income", 1111111111)
         dailySpendingLimit = (monthly_income / 31).toInt()
+        var saving_income = pref.getLong("saving_income", 0)
+
+//  ........... set text on txt show saving of shared pref .....................
+        val overSpentAmount = kotlin.math.abs(saving_income)
+//
+        if (saving_income >= 0) {
+            binding.txtShowSaving.text = "Your saving income: $saving_income"
+            binding.txtShowSaving.setTextColor(requireContext().getColor(R.color.green_200))
+        } else {
+            binding.txtShowSaving.text = "You have overspent! You exceeded your limit by $overSpentAmount."
+            binding.txtShowSaving.setTextColor(requireContext().getColor(R.color.red))
+        }
+
 
 //        show limie prescent daily .......................
         val db = DBHandler.getDatabase(requireContext())
@@ -85,6 +99,8 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
             binding.animSavingDaily.visibility = View.VISIBLE
             binding.animSavingMonthly.visibility = View.VISIBLE
         }, 1000)
+
+
 
         return binding.root
     }

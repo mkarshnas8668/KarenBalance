@@ -61,23 +61,35 @@ class TargetsRecyclerAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(target: TargetEntity) {
-            binding.txtNameTarget.text = target.name
-            binding.txtDescriptionTarget.text =
-                "${context.getString(R.string.you_have)} 10,000 ${context.getString(R.string.out_of)} ${
-                    target.price.toLong().format_number()
-                }"
-            binding.txtDateTarget.text = target.date
-            binding.txtShowProgress.text = "${target.progress} %"
-            binding.progressBarTarget.progress = target.progress
-
-            val imgPath = target.img
-
             pref = context.getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
-
             //        get monthly income .........
+
             val monthly_income = pref.getLong("monthly_income", 1111111111)
             dailySpendingLimit = (monthly_income / 31).toInt()
             val saving_income = pref.getLong("saving_income",0)
+
+            val percentage = if (target.price > 0) {
+                (saving_income.toFloat() / target.price.toFloat()) * 100
+            } else { 0f }
+
+            binding.txtNameTarget.text = target.name
+            binding.txtDateTarget.text = target.date
+            if (percentage > 0) {
+                binding.txtShowProgress.text = "${percentage} %"
+                binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
+                binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${saving_income} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                binding.progressBarTarget.progress = percentage.toInt()
+            }else{
+                binding.txtShowProgress.text = "0 %"
+                binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.oring))
+                binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} 0 ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                binding.progressBarTarget.progress = 0
+
+            }
+
+            val imgPath = target.img
+
+
 
             if (imgPath.startsWith("content://")) {
                 try {

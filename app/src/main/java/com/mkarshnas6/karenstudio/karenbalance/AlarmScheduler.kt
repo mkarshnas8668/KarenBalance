@@ -18,7 +18,7 @@ object AlarmScheduler {
         )
 
         val calendar: Calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 0) // hour 12 pm
+        calendar.set(Calendar.HOUR_OF_DAY, 23) // hour 11 pm
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 

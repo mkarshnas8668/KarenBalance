@@ -552,6 +552,29 @@ class MainActivity : AppCompatActivity() {
         txtPrice.textSize = 25f
         txtPrice.inputType = InputType.TYPE_CLASS_NUMBER
 
+        txtPrice.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val price_edit_txt = txtPrice.text.toString()
+
+                if (price_edit_txt.isNotEmpty()) {
+                    val cleanString = price_edit_txt.replace(",", "")
+                    try {
+                        val priceLong = cleanString.toLong()
+                        val formattedPrice = String.format("%,d", priceLong)
+                        txtPrice.removeTextChangedListener(this)
+                        txtPrice.setText(formattedPrice)
+
+                        txtPrice.setSelection(formattedPrice.length)
+                        txtPrice.addTextChangedListener(this)
+                    } catch (e: NumberFormatException) {
+                        Toast.makeText(this@MainActivity, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         val editTxtDescription = EditText(this)
         editTxtDescription.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
         editTxtDescription.hint = "enter your Description for expene"
@@ -603,7 +626,7 @@ class MainActivity : AppCompatActivity() {
                     .isNotEmpty()
             ) {
                 val db = DBHandler.getDatabase(context = this)
-                val price = txtPrice.text.toString().toInt()
+                val price = txtPrice.text.toString().replace(",","").toInt()
                 val date = persian_date_today
                 val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
 
@@ -640,6 +663,16 @@ class MainActivity : AppCompatActivity() {
                 )
                     .show()
 
+        }
+
+        dialogMonthlyIncome.setOnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                // Dismiss the dialog when the back button is pressed
+                dialogMonthlyIncome.dismiss()
+                true // Return true to indicate the event has been handled
+            } else {
+                false
+            }
         }
 
     }

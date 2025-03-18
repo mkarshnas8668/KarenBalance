@@ -11,7 +11,9 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.KeyEvent
@@ -264,8 +266,32 @@ class TargetsRecyclerAdapter(
             inputType = InputType.TYPE_CLASS_NUMBER
             setBackgroundResource(R.drawable.back_view_border)
             textSize = 18f
-            setText(target.price.toString())
+            setText(target.price.toString().toLong().format_number())
         }
+
+        priceEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val price_edit_txt = priceEditText.text.toString()
+
+                if (price_edit_txt.isNotEmpty()) {
+                    val cleanString = price_edit_txt.replace(",", "")
+                    try {
+                        val priceLong = cleanString.toLong()
+                        val formattedPrice = String.format("%,d", priceLong)
+                        priceEditText.removeTextChangedListener(this)
+                        priceEditText.setText(formattedPrice)
+
+                        priceEditText.setSelection(formattedPrice.length)
+                        priceEditText.addTextChangedListener(this)
+                    } catch (e: NumberFormatException) {
+                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         priceTextInputLayout.addView(priceEditText)
 
         val necessaryCheckBox = CheckBox(context).apply {
@@ -338,7 +364,7 @@ class TargetsRecyclerAdapter(
 
         positiveButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
-            val priceText = priceEditText.text.toString().trim()
+            val priceText = priceEditText.text.toString().replace(",","").trim()
             val date = persian_date_today
             val isNecessary = necessaryCheckBox.isChecked
             val img = imageView.drawable?.let { drawable ->

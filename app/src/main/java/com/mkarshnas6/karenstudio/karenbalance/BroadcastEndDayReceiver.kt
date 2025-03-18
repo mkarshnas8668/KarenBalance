@@ -24,6 +24,8 @@ class BroadcastEndDayReceiver() {
         lateinit var pref: SharedPreferences
         private var totalExpenseToday = 0
         private var dailySpendingLimit = 0
+        private val persian_date_today: String
+            get() = PersianDate.getPersianDateToday()
 
         @SuppressLint("CheckResult", "CommitPrefEdits")
         fun handleEndOfDayTasks(context: Context) {
@@ -68,9 +70,17 @@ class BroadcastEndDayReceiver() {
                     sendNotification(context, savingDifference, isOverspent)
                 }
             }
+
+//            check the monthly if month is pass
+            clearTableIfNewMonthStarted(context)
+
         }
 
-        private fun sendNotification(context: Context, savingDifference: Int, isOverspent: Boolean) {
+        private fun sendNotification(
+            context: Context,
+            savingDifference: Int,
+            isOverspent: Boolean
+        ) {
             val notificationIntent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(
                 context,
@@ -111,5 +121,52 @@ class BroadcastEndDayReceiver() {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
             return "$year-$month-$day"
         }
+
+        fun clearTableIfNewMonthStarted(context: Context) {
+            val db = DBHandler.getDatabase(context)
+            val reportDao = db.reportDao()
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val latestRecord = reportDao.getOldestRecord()
+
+                latestRecord?.let {
+                    val persianDateToday = PersianDate.getPersianDateToday()
+                    val currentMonth = persianDateToday.split("/")[1].toInt()
+                    val lastPersianDate = it.date
+                    val lastRecordMonth = lastPersianDate.split("/")[1].toInt()
+
+                    if (lastRecordMonth != currentMonth) {
+                        reportDao.deleteAllMonthlys()
+
+                        val notificationIntent = Intent(context, MainActivity::class.java)
+                        val pendingIntent = PendingIntent.getActivity(
+                            context,
+                            0,
+                            notificationIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                        )
+
+                        val notification = NotificationCompat.Builder(context, "channel")
+                            .setSmallIcon(R.drawable.ic_money_navigation)
+                            .setContentTitle("New Month Started")
+                            .setContentText("We've entered a new month! Last month's expenses have been cleared.")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .build()
+
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            NotificationManagerCompat.from(context).notify(2, notification)
+                        }
+                    }
+                }
+            }
+        }
+
+        
     }
 }

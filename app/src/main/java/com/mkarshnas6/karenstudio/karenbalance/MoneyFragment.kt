@@ -4,7 +4,9 @@ import ExpensesRecyclerAdapter
 import PersianDate
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -116,7 +118,8 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
         if (edit_daily_or_report == "daily") {
             expense_daily?.let { daily ->
                 if (daily.date == persian_date_today) {
-                    val builderAlert = AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
+                    val builderAlert =
+                        AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
                     builderAlert.setTitle("Reports Expense")
                     builderAlert.setMessage("Enter your Description :")
 
@@ -127,12 +130,17 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                     }
 
                     val edittxtPrice = EditText(context).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.chocolate_brown))
+                        setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.chocolate_brown
+                            )
+                        )
                         hint = "Enter Price"
                         setBackgroundResource(R.drawable.back_view_border)
                         textSize = 25f
                         inputType = InputType.TYPE_CLASS_NUMBER
-                        setText(daily.price.toString())
+                        setText(daily.price.toString().toLong().format_number())
                         layoutParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -141,9 +149,54 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                         }
                     }
 
+                    edittxtPrice.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable?) {
+                            val price_edit_txt = edittxtPrice.text.toString()
+
+                            if (price_edit_txt.isNotEmpty()) {
+                                val cleanString = price_edit_txt.replace(",", "")
+                                try {
+                                    val priceLong = cleanString.toLong()
+                                    val formattedPrice = String.format("%,d", priceLong)
+                                    edittxtPrice.removeTextChangedListener(this)
+                                    edittxtPrice.setText(formattedPrice)
+
+                                    edittxtPrice.setSelection(formattedPrice.length)
+                                    edittxtPrice.addTextChangedListener(this)
+                                } catch (e: NumberFormatException) {
+                                    Toast.makeText(
+                                        context,
+                                        "enter the valid number !!!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                        }
+
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                        }
+                    })
 
                     val editTxtDescription = EditText(context).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.chocolate_brown))
+                        setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.chocolate_brown
+                            )
+                        )
                         hint = "Enter your Description for expense"
                         setBackgroundResource(R.drawable.back_view_border)
                         textSize = 25f
@@ -176,10 +229,10 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                     val positiveButton = dialogMonthlyIncome.getButton(AlertDialog.BUTTON_POSITIVE)
                     positiveButton.setOnClickListener {
                         val incomeText = editTxtDescription.text.toString()
-                        val priceText = edittxtPrice.text.toString()
+                        val priceText = edittxtPrice.text.toString().replace(",", "")
                         if (priceText.isNotEmpty()) {
                             val db = DBHandler.getDatabase(requireContext())
-                            
+
                             val updatedaily = DailyEntity(
                                 id = daily.id,
                                 price = priceText.toInt(),
@@ -194,20 +247,26 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                                 .subscribe({
                                     print("Update successful!")
                                 }, { error ->
-                                    Toast.makeText(context, "Error updating record: ${error.message}", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Error updating record: ${error.message}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 })
 
                             Toast.makeText(context, "Description saved!", Toast.LENGTH_SHORT).show()
                             dialogMonthlyIncome.dismiss()
                         } else {
-                            Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
             }
         } else {
             expense_report?.let { report ->
-                val builderAlert = AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
+                val builderAlert =
+                    AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
                 builderAlert.setTitle("Reports Expense")
                 builderAlert.setMessage("Enter your Description :")
 
@@ -282,19 +341,23 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                             .subscribe({
                                 print("Update successful!")
                             }, { error ->
-                                Toast.makeText(context, "Error updating record: ${error.message}", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    context,
+                                    "Error updating record: ${error.message}",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             })
 
                         Toast.makeText(context, "Description saved!", Toast.LENGTH_SHORT).show()
                         dialogMonthlyIncome.dismiss()
                     } else {
-                        Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
         }
     }
-
 
 
 // end function alert edit price and description

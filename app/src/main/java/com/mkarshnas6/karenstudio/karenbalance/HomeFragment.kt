@@ -119,13 +119,13 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 pieChart_daily.setEntryLabelTextSize(20f)
 
 
-
                 val entries_daily: ArrayList<PieEntry> = ArrayList()
                 val chart_colors_daily: ArrayList<Int> = ArrayList()
 
 
                 val totalExpenseTodayplus = kotlin.math.abs(totalExpenseToday)
-                val totalExpenseTodayPercent = (totalExpenseTodayplus / dailySpendingLimit.toFloat()) * 100
+                val totalExpenseTodayPercent =
+                    (totalExpenseTodayplus / dailySpendingLimit.toFloat()) * 100
 
                 val remaining_today = dailySpendingLimit - totalExpenseTodayplus
                 if (totalExpenseTodayplus > dailySpendingLimit) {
@@ -143,13 +143,23 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                     entries_daily.add(PieEntry(totalExpenseTodayPercent, "used"))
                     entries_daily.add(PieEntry(100f - totalExpenseTodayPercent, "save"))
                     chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.blue))
-                    chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.green_200))
+                    chart_colors_daily.add(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green_200
+                        )
+                    )
                 } else if (totalExpenseTodayplus > dailySpendingLimit) {
                     entries_daily.add(PieEntry(100f, "over limit"))
                     chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.blue))
                 } else {
                     entries_daily.add(PieEntry(dailySpendingLimit.toFloat(), "save"))
-                    chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.green_200))
+                    chart_colors_daily.add(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green_200
+                        )
+                    )
                 }
 
                 val dataSet_daily = PieDataSet(entries_daily, "")
@@ -212,7 +222,8 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                     totalExpenseToday = dailySpendingLimit
                     binding.pieChartDaily.setTouchEnabled(false)
                     binding.pieChartDaily.alpha = 0.3f
-                    binding.txtDailySpentIncome.text = "${getString(R.string.daily_spent_income)} - Unspent: \n0 - over limited !!"
+                    binding.txtDailySpentIncome.text =
+                        "${getString(R.string.daily_spent_income)} - Unspent: \n0 - over limited !!"
                     binding.txtDailySpentIncome.setTextColor(requireContext().getColor(R.color.red))
                     binding.txtDailySpentIncome.alpha = 0.5f
                 }
@@ -249,19 +260,30 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 val chart_colors_monthly: ArrayList<Int> = ArrayList()
 
                 val totalExpenseMonthlyplus = kotlin.math.abs(totalExpenseMonthly)
-                val totalExpenseMonthlyPercent = (totalExpenseMonthlyplus / MonthlySpendingLimit.toFloat()) * 100
+                val totalExpenseMonthlyPercent =
+                    (totalExpenseMonthlyplus / MonthlySpendingLimit.toFloat()) * 100
 
                 if (totalExpenseMonthlyplus <= MonthlySpendingLimit.toInt()) {
                     entries_monthly.add(PieEntry(totalExpenseMonthlyPercent, "used"))
                     entries_monthly.add(PieEntry(100f - totalExpenseMonthlyPercent, "save"))
                     chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.blue))
-                    chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.green_200))
+                    chart_colors_monthly.add(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green_200
+                        )
+                    )
                 } else if (totalExpenseMonthlyplus > MonthlySpendingLimit) {
                     entries_monthly.add(PieEntry(100f, "over limit"))
                     chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.blue))
                 } else {
                     entries_monthly.add(PieEntry(MonthlySpendingLimit.toFloat(), "save"))
-                    chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.green_200))
+                    chart_colors_monthly.add(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green_200
+                        )
+                    )
                 }
 
                 val remaining_monthly = MonthlySpendingLimit - totalExpenseMonthlyplus
@@ -460,10 +482,12 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                         editTxtMonthlyIncome.setSelection(formattedPrice.length)
                         editTxtMonthlyIncome.addTextChangedListener(this)
                     } catch (e: NumberFormatException) {
-                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -509,7 +533,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         positiveButton.textSize = 18f // Increase text size
 
         positiveButton.setOnClickListener {
-            val incomeText = editTxtMonthlyIncome.text.toString().replace(",","")
+            val incomeText = editTxtMonthlyIncome.text.toString().replace(",", "")
             if (incomeText.isNotEmpty()) {
 
                 pref.edit().putLong("monthly_income", incomeText.toLong()).apply()

@@ -90,7 +90,13 @@ class TargetsRecyclerAdapter(
                     binding.txtShowProgress.text = "100 %"
 
                 binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
-                binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${saving_income} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                if(saving_income >= target.price){
+                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${target.price.toLong().format_number()} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                    binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.green_200))
+                }else{
+                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${saving_income.toLong().format_number()} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                    binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
+                }
                 binding.progressBarTarget.progress = percentage.toInt()
             }else{
                 binding.txtShowProgress.text = "0 %"

@@ -29,4 +29,8 @@ interface ReportDAO {
     @Update
     fun updateMonthly(monthly: ReportEntity)
 
+    @Query("SELECT * FROM ${DBHandler.REPORT_TABLE} ORDER BY date ASC LIMIT 1")
+    fun getOldestRecord(): ReportEntity?
+
+
 }

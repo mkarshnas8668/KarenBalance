@@ -9,11 +9,11 @@
     tools:context=".SavingFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_save_daily"
+        android:id="@+id/card_show_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,27 +24,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="14dp"
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/txt_save_daily"
+                android:id="@+id/txt_show_saving"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:fontFamily="@font/pacifico_egular"
                 android:textSize="24sp"
-                android:text="@string/amount_saved_today" />
+                tools:text="test Saving !!" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_save_daily"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_show_save">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txt_save_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pacifico_egular"
+                android:gravity="center"
+                android:text="@string/amount_saved_today"
+                android:textSize="24sp" />
 
             <ProgressBar
                 android:id="@+id/progressBar_daily"
                 style="?android:attr/progressBarStyle"
-                android:indeterminate="true"
-                android:indeterminateTintMode="src_atop"
-                android:indeterminateTint="@color/caramel"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/caramel"
+                android:indeterminateTintMode="src_atop" />
 
             <app.rive.runtime.kotlin.RiveAnimationView
                 android:id="@+id/anim_saving_daily"

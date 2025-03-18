@@ -6,8 +6,10 @@ import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -443,6 +445,29 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         editTxtMonthlyIncome.textSize = 25f
         editTxtMonthlyIncome.inputType = InputType.TYPE_CLASS_NUMBER
 
+        editTxtMonthlyIncome.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val price_edit_txt = editTxtMonthlyIncome.text.toString()
+
+                if (price_edit_txt.isNotEmpty()) {
+                    val cleanString = price_edit_txt.replace(",", "")
+                    try {
+                        val priceLong = cleanString.toLong()
+                        val formattedPrice = String.format("%,d", priceLong)
+                        editTxtMonthlyIncome.removeTextChangedListener(this)
+                        editTxtMonthlyIncome.setText(formattedPrice)
+
+                        editTxtMonthlyIncome.setSelection(formattedPrice.length)
+                        editTxtMonthlyIncome.addTextChangedListener(this)
+                    } catch (e: NumberFormatException) {
+                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         if (btn_clicked == "btn_edit")
             editTxtMonthlyIncome.setText(
                 pref.getLong("monthly_income", 1111111111111111111).toString()
@@ -484,7 +509,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         positiveButton.textSize = 18f // Increase text size
 
         positiveButton.setOnClickListener {
-            val incomeText = editTxtMonthlyIncome.text.toString()
+            val incomeText = editTxtMonthlyIncome.text.toString().replace(",","")
             if (incomeText.isNotEmpty()) {
 
                 pref.edit().putLong("monthly_income", incomeText.toLong()).apply()

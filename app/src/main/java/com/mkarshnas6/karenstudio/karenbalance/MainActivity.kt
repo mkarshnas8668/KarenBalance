@@ -13,8 +13,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -54,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val SMS_PERMISSION_REQUEST_CODE = 1
     private val PERMISSIONS_RECEIVE_SMS = 101
-    private lateinit var image_alert:ImageView
+    private lateinit var image_alert: ImageView
     private val persian_date_today: String
         get() = PersianDate.getPersianDateToday()
     private var selectedImageUri: Uri? = null
@@ -108,7 +110,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }, { error ->
-                Toast.makeText(this, "Error fetching data: ${error.message}", Toast.LENGTH_LONG).show() })
+                Toast.makeText(this, "Error fetching data: ${error.message}", Toast.LENGTH_LONG)
+                    .show()
+            })
 
         // تغییر رنگ نوار وضعیت و نوار ناوبری
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -130,23 +134,25 @@ class MainActivity : AppCompatActivity() {
 //        set action work btn add reports
         binding.actionBtnAddSpent.setOnClickListener { show_alert_add_report() }
 
-        binding.actionBtnAddTarget.setOnClickListener {show_alert_new_target()}
-        
+        binding.actionBtnAddTarget.setOnClickListener { show_alert_new_target() }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.nav_money) {
                 binding.actionBtnAddSpent.visibility = View.VISIBLE
 
                 binding.actionBtnAddSpent.translationY = 500f
-                binding.actionBtnAddSpent.animate().translationY(0f).alpha(1f).setDuration(300).start()
-            }else
+                binding.actionBtnAddSpent.animate().translationY(0f).alpha(1f).setDuration(300)
+                    .start()
+            } else
                 binding.actionBtnAddSpent.visibility = View.GONE
 
             if (destination.id == R.id.nav_target) {
                 binding.actionBtnAddTarget.visibility = View.VISIBLE
 
                 binding.actionBtnAddTarget.translationY = 500f
-                binding.actionBtnAddTarget.animate().translationY(0f).alpha(1f).setDuration(300).start()
-            }else
+                binding.actionBtnAddTarget.animate().translationY(0f).alpha(1f).setDuration(300)
+                    .start()
+            } else
                 binding.actionBtnAddTarget.visibility = View.GONE
         }
 
@@ -241,6 +247,30 @@ class MainActivity : AppCompatActivity() {
         priceEditText.inputType = InputType.TYPE_CLASS_NUMBER
         priceEditText.setBackgroundResource(R.drawable.back_view_border)
         priceEditText.textSize = 18f
+
+        priceEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val price_edit_txt = priceEditText.text.toString()
+
+                if (price_edit_txt.isNotEmpty()) {
+                    val cleanString = price_edit_txt.replace(",", "")
+
+                    try {
+                        val priceLong = cleanString.toLong()
+                        val formattedPrice = String.format("%,d", priceLong) // فرمت کردن با کاما
+                        priceEditText.removeTextChangedListener(this)
+                        priceEditText.setText(formattedPrice)
+                        priceEditText.setSelection(formattedPrice.length)
+                        priceEditText.addTextChangedListener(this)
+                    } catch (e: NumberFormatException) {
+                        priceEditText.error = "لطفا عدد معتبر وارد کنید"
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        
         priceTextInputLayout.addView(priceEditText)
         val priceLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -296,10 +326,11 @@ class MainActivity : AppCompatActivity() {
 
         positiveButton.setOnClickListener {
             val name = nameEditText.text.toString()
-            val price = priceEditText.text.toString()
+            val price = priceEditText.text.toString().replace(",","")
             val date = persian_date_today
             val isNecessary = necessaryCheckBox.isChecked
-            val img = selectedImageUri?.let { saveImageToInternalStorage(it) } ?: "android.resource://${this.packageName}/drawable/luxe_home"
+            val img = selectedImageUri?.let { saveImageToInternalStorage(it) }
+                ?: "android.resource://${this.packageName}/drawable/luxe_home"
 
 
             if (name.isEmpty()) {
@@ -349,7 +380,9 @@ class MainActivity : AppCompatActivity() {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss()
                 true
-            } else { false }
+            } else {
+                false
+            }
         }
     }
 
@@ -369,7 +402,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object { private const val IMAGE_REQUEST_CODE = 1001 }
+    companion object {
+        private const val IMAGE_REQUEST_CODE = 1001
+    }
 
     fun saveImageToInternalStorage(uri: Uri): String? {
         try {
@@ -564,7 +599,9 @@ class MainActivity : AppCompatActivity() {
 
         positiveButton.setOnClickListener {
             // update descriptions db
-            if (editTxtDescription.text.toString() != "NULL" && txtPrice.text.toString().isNotEmpty()) {
+            if (editTxtDescription.text.toString() != "NULL" && txtPrice.text.toString()
+                    .isNotEmpty()
+            ) {
                 val db = DBHandler.getDatabase(context = this)
                 val price = txtPrice.text.toString().toInt()
                 val date = persian_date_today
@@ -596,7 +633,11 @@ class MainActivity : AppCompatActivity() {
                 dialogMonthlyIncome.dismiss()
 
             } else
-                Toast.makeText(this, "Description can't be NULL or empty !!! ❌❌", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this,
+                    "Description can't be NULL or empty !!! ❌❌",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
 
         }

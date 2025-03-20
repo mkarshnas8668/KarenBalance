@@ -29,7 +29,18 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            // تغییر نام خروجی APK به KarenGold.apk
+            android.applicationVariants.all {
+                outputs.forEach { output ->
+                    if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
+                        output.outputFileName = "KarenGold.apk"
+                    }
+                }
+            }
+
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -30,11 +30,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            // تغییر نام خروجی APK به KarenGold.apk
+            // تغییر نام خروجی APK به KarenBalance.apk
             android.applicationVariants.all {
                 outputs.forEach { output ->
                     if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-                        output.outputFileName = "KarenGold.apk"
+                        output.outputFileName = "KarenBalance.apk"
                     }
                 }
             }

@@ -32,6 +32,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_karenbalance_round"
         android:supportsRtl="true"
+        android:forceDarkAllowed="false"
         android:theme="@style/Theme.KarenBalance"
         tools:targetApi="31">
 

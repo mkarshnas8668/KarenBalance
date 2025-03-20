@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_margin="5dp"
     android:background="@drawable/back_list_item_recycle"
     android:paddingBottom="5dp"
     android:elevation="4dp"> <!-- سایه اضافه شده -->
@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/highlights"
         android:contentDescription="@string/btn_edit"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,35 +25,37 @@
 
     <TextView
         android:id="@+id/txt_price"
-        android:layout_width="231dp"
+        android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/pacifico_egular"
         android:text="Price"
-        android:textSize="16sp"
+        android:textSize="45px"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_edit_report_expense"
         app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- ScrollView with fixed height -->
+
     <ScrollView
-        android:layout_width="337dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
-        app:layout_constraintTop_toBottomOf="@+id/txt_price">
+        app:layout_constraintEnd_toEndOf="@+id/txt_date_time"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_date_time"
+        app:layout_constraintTop_toBottomOf="@+id/btn_edit_report_expense">
 
         <TextView
             android:id="@+id/txt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
             android:text="مبلغ یک میلیون تومان به شرح زیر خرج شده است:400,000 تومان برای خرید مواد غذایی از جمله نان، برنج، روغن، و سایر اقلام ضروری صرف شده است. 100,000 تومان برای هزینه‌های حمل‌ونقل شامل تاکسی، اتوبوس یا سوخت خودرو پرداخت شده است. 150,000 تومان به تفریحات اختصاص داده شده که شامل صرف غذا در رستوران و نوشیدنی در کافه می‌شود. 50,000 تومان نیز برای سرگرمی‌هایی مانند خرید بلیت سینما یا پرداخت هزینه فعالیت‌های تفریحی هزینه شده است. 200,000 تومان برای پرداخت قبوض مختلف مانند آب، برق، گاز و اینترنت استفاده شده است. 50,000 تومان به خرید لوازم بهداشتی مانند شامپو و صابون اختصاص یافته است. در نهایت، 50,000 تومان به عنوان پس‌انداز به حساب بانکی منتقل شده است."
+            android:textSize="40px"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.347"
             app:layout_constraintStart_toEndOf="@+id/btn_edit_report_expense"
@@ -65,10 +68,14 @@
         android:layout_height="40dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="1398/66/65 \n 34:34"
+        android:textSize="35px"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_price"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/txt_price"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/txt_price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

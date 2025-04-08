@@ -3,7 +3,6 @@ package com.mkarshnas6.karenstudio.karenbalance
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -61,7 +60,8 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         // get the shared preferences .........
         pref = requireContext().getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
 //      ...........  Set Name Bank from shared pref ...........................
-        binding.txtShowNameBank.text = pref.getString("name_bank", "Error to get name bank !!")
+        binding.txtShowNameBank.text =
+            pref.getString("name_bank", resources.getString(R.string.error_get_name_bank))
 
 //        get monthly income .........
         val monthly_income = pref.getLong("monthly_income", 1111111111)
@@ -130,18 +130,29 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 val remaining_today = dailySpendingLimit - totalExpenseTodayplus
                 if (totalExpenseTodayplus > dailySpendingLimit) {
                     binding.txtDailySpentIncome.text =
-                        "Daily Spent Income - Unspent: \n 0 - over limited !!"
+                        resources.getString(R.string.daily_spent_over)
                     binding.txtDailySpentIncome.setTextColor(requireContext().getColor(R.color.red))
                 } else {
-                    binding.txtDailySpentIncome.text = "Daily Spent Income - Unspent: \n ${
+                    binding.txtDailySpentIncome.text = getString(
+                        R.string.daily_spent_income_unspent,
                         remaining_today.toLong().format_number()
-                    }"
+                    )
                     binding.txtDailySpentIncome.setTextColor(requireContext().getColor(R.color.chocolate_brown))
                 }
 
                 if (totalExpenseTodayplus <= dailySpendingLimit.toInt()) {
-                    entries_daily.add(PieEntry(totalExpenseTodayPercent, "used"))
-                    entries_daily.add(PieEntry(100f - totalExpenseTodayPercent, "save"))
+                    entries_daily.add(
+                        PieEntry(
+                            totalExpenseTodayPercent,
+                            resources.getString(R.string.used)
+                        )
+                    )
+                    entries_daily.add(
+                        PieEntry(
+                            100f - totalExpenseTodayPercent,
+                            resources.getString(R.string.Save)
+                        )
+                    )
                     chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.blue))
                     chart_colors_daily.add(
                         ContextCompat.getColor(
@@ -150,10 +161,15 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                         )
                     )
                 } else if (totalExpenseTodayplus > dailySpendingLimit) {
-                    entries_daily.add(PieEntry(100f, "over limit"))
+                    entries_daily.add(PieEntry(100f, resources.getString(R.string.over_limit)))
                     chart_colors_daily.add(ContextCompat.getColor(requireContext(), R.color.blue))
                 } else {
-                    entries_daily.add(PieEntry(dailySpendingLimit.toFloat(), "save"))
+                    entries_daily.add(
+                        PieEntry(
+                            dailySpendingLimit.toFloat(),
+                            resources.getString(R.string.Save)
+                        )
+                    )
                     chart_colors_daily.add(
                         ContextCompat.getColor(
                             requireContext(),
@@ -204,7 +220,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
             }, { error ->
                 Toast.makeText(
                     requireContext(),
-                    "Error fetching data: ${error.message}",
+                    resources.getString(R.string.error_fetching_data, error.message),
                     Toast.LENGTH_LONG
                 ).show()
             })
@@ -223,7 +239,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                     binding.pieChartDaily.setTouchEnabled(false)
                     binding.pieChartDaily.alpha = 0.3f
                     binding.txtDailySpentIncome.text =
-                        "${getString(R.string.daily_spent_income)} - Unspent: \n0 - over limited !!"
+                        resources.getString(R.string.daily_spent_over)
                     binding.txtDailySpentIncome.setTextColor(requireContext().getColor(R.color.red))
                     binding.txtDailySpentIncome.alpha = 0.5f
                 }
@@ -264,8 +280,18 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                     (totalExpenseMonthlyplus / MonthlySpendingLimit.toFloat()) * 100
 
                 if (totalExpenseMonthlyplus <= MonthlySpendingLimit.toInt()) {
-                    entries_monthly.add(PieEntry(totalExpenseMonthlyPercent, "used"))
-                    entries_monthly.add(PieEntry(100f - totalExpenseMonthlyPercent, "save"))
+                    entries_monthly.add(
+                        PieEntry(
+                            totalExpenseMonthlyPercent,
+                            resources.getString(R.string.used)
+                        )
+                    )
+                    entries_monthly.add(
+                        PieEntry(
+                            100f - totalExpenseMonthlyPercent,
+                            resources.getString(R.string.Save)
+                        )
+                    )
                     chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.blue))
                     chart_colors_monthly.add(
                         ContextCompat.getColor(
@@ -274,10 +300,15 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                         )
                     )
                 } else if (totalExpenseMonthlyplus > MonthlySpendingLimit) {
-                    entries_monthly.add(PieEntry(100f, "over limit"))
+                    entries_monthly.add(PieEntry(100f, resources.getString(R.string.over_limit)))
                     chart_colors_monthly.add(ContextCompat.getColor(requireContext(), R.color.blue))
                 } else {
-                    entries_monthly.add(PieEntry(MonthlySpendingLimit.toFloat(), "save"))
+                    entries_monthly.add(
+                        PieEntry(
+                            MonthlySpendingLimit.toFloat(),
+                            resources.getString(R.string.Save)
+                        )
+                    )
                     chart_colors_monthly.add(
                         ContextCompat.getColor(
                             requireContext(),
@@ -289,12 +320,14 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 val remaining_monthly = MonthlySpendingLimit - totalExpenseMonthlyplus
                 if (totalExpenseMonthlyplus > MonthlySpendingLimit) {
                     binding.txtMonthlySpentIncome.text =
-                        "Daily Spent Income - Unspent: \n 0 - over limited !!"
+                        resources.getString(R.string.daily_spent_over)
                     binding.txtMonthlySpentIncome.setTextColor(requireContext().getColor(R.color.red))
                 } else {
-                    binding.txtMonthlySpentIncome.text = "Daily Spent Income - Unspent: \n ${
+                    binding.txtMonthlySpentIncome.text = getString(
+                        R.string.monthly_spent_income_unspent,
                         remaining_monthly.format_number()
-                    }"
+                    )
+
                     binding.txtMonthlySpentIncome.setTextColor(requireContext().getColor(R.color.chocolate_brown))
                 }
 
@@ -341,7 +374,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
             }, { error ->
                 Toast.makeText(
                     requireContext(),
-                    "Error fetching data: ${error.message}",
+                    resources.getString(R.string.error_fetching_data,error.message),
                     Toast.LENGTH_LONG
                 ).show()
             })
@@ -364,8 +397,8 @@ class HomeFragment : Fragment(R.layout.activity_home) {
 
     fun show_alert_bank_name(btn_clicked: String) {
         val builderAlert = AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
-        builderAlert.setTitle("Bank Name")
-        builderAlert.setMessage("Enter the name of the bank where your income will be deposited :")
+        builderAlert.setTitle(resources.getString(R.string.name_bank))
+        builderAlert.setMessage(resources.getString(R.string.enter_bank_name))
 
         val layoutAlertDialog = LinearLayout(requireContext())
         layoutAlertDialog.orientation = LinearLayout.VERTICAL
@@ -379,7 +412,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 R.color.chocolate_brown
             )
         )
-        editTxtMonthlyIncome.hint = "Alike : +9891********* | ResalatBank"
+        editTxtMonthlyIncome.hint = resources.getString(R.string.alike_bank_name)
         editTxtMonthlyIncome.setBackgroundResource(R.drawable.back_view_border)
         editTxtMonthlyIncome.filters = arrayOf(InputFilter.LengthFilter(19))
         editTxtMonthlyIncome.textSize = 25f
@@ -387,7 +420,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
 
         if (btn_clicked == "btn_edit")
             editTxtMonthlyIncome.setText(
-                pref.getString("name_bank", "Error to get name bank !!").toString()
+                pref.getString("name_bank", resources.getString(R.string.error_get_name_bank)).toString()
             )
 
         val layoutParamsEdittxt = LinearLayout.LayoutParams(
@@ -400,7 +433,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         layoutAlertDialog.addView(editTxtMonthlyIncome)
 
         builderAlert.setView(layoutAlertDialog)
-        builderAlert.setPositiveButton("Save", null)
+        builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -432,13 +465,14 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 pref.edit().putString("name_bank", name_bank_text).apply()
                 Toast.makeText(
                     requireContext(),
-                    "Name bank : $name_bank_text saved!",
+                    getString(R.string.name_bank_saved, name_bank_text),
                     Toast.LENGTH_SHORT
                 ).show()
+
                 dialogMonthlyIncome.dismiss()
                 binding.txtShowNameBank.text = name_bank_text
             } else {
-                Toast.makeText(requireContext(), "Field cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.filed_can_not_empty), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -446,8 +480,8 @@ class HomeFragment : Fragment(R.layout.activity_home) {
 
     fun show_alert_montyle_income(btn_clicked: String) {
         val builderAlert = AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
-        builderAlert.setTitle("Monthly Income")
-        builderAlert.setMessage("Enter your monthly Income:")
+        builderAlert.setTitle(resources.getString(R.string.monthly_income))
+        builderAlert.setMessage(resources.getString(R.string.enter_monthly_income))
 
         val layoutAlertDialog = LinearLayout(requireContext())
         layoutAlertDialog.orientation = LinearLayout.VERTICAL
@@ -461,7 +495,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                 R.color.chocolate_brown
             )
         )
-        editTxtMonthlyIncome.hint = "Enter Monthly Income"
+        editTxtMonthlyIncome.hint = resources.getString(R.string.enter_monthly_income)
         editTxtMonthlyIncome.setBackgroundResource(R.drawable.back_view_border)
         editTxtMonthlyIncome.filters = arrayOf(InputFilter.LengthFilter(19))
         editTxtMonthlyIncome.textSize = 25f
@@ -482,7 +516,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
                         editTxtMonthlyIncome.setSelection(formattedPrice.length)
                         editTxtMonthlyIncome.addTextChangedListener(this)
                     } catch (e: NumberFormatException) {
-                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, resources.getString(R.string.Enter_valid_num), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -507,7 +541,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
         layoutAlertDialog.addView(editTxtMonthlyIncome)
 
         builderAlert.setView(layoutAlertDialog)
-        builderAlert.setPositiveButton("Save", null)
+        builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -520,8 +554,8 @@ class HomeFragment : Fragment(R.layout.activity_home) {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        layoutParamsButton.gravity = Gravity.CENTER // Center the button
-        layoutParamsButton.setMargins(0, 20, 0, 0) // Add top margin for spacing
+        layoutParamsButton.gravity = Gravity.CENTER
+        layoutParamsButton.setMargins(0, 20, 0, 0)
         positiveButton.layoutParams = layoutParamsButton
         positiveButton.setTextColor(
             ContextCompat.getColor(
@@ -538,12 +572,12 @@ class HomeFragment : Fragment(R.layout.activity_home) {
 
                 pref.edit().putLong("monthly_income", incomeText.toLong()).apply()
                 pref.edit().putBoolean("isFirstRun", false).apply()
-                Toast.makeText(requireContext(), "Monthly income saved!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.monthly_income_save), Toast.LENGTH_SHORT).show()
                 dialogMonthlyIncome.dismiss()
                 binding.txtShowMonthlyIncome.text = incomeText.format_number()
 
             } else {
-                Toast.makeText(requireContext(), "Field cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.filed_can_not_empty), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -552,7 +586,7 @@ class HomeFragment : Fragment(R.layout.activity_home) {
     override fun onStart() {
         super.onStart()
 
-        AnimationWrite.showAnimTitle(binding.txtTitleHome, "Home Page")
+        AnimationWrite.showAnimTitle(binding.txtTitleHome, resources.getString(R.string.home_page))
         AnimationWrite.showAnimTitle(
             binding.txtShowMonthlyIncome,
             binding.txtShowMonthlyIncome.text.toString()

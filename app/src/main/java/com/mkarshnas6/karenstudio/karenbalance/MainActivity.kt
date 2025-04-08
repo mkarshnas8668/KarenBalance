@@ -86,11 +86,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }, { error ->
 
-                Toast.makeText(
-                    this,
-                    "Error fetching latest date: ${error.message}",
-                    Toast.LENGTH_LONG
-                ).show()
+                val errorMessage = getString(R.string.error_fetching_latest_date, error.message)
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+
             })
 
         db.dailyDao().getDailys
@@ -110,8 +108,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }, { error ->
-                Toast.makeText(this, "Error fetching data: ${error.message}", Toast.LENGTH_LONG)
-                    .show()
+                val errorMessage = getString(R.string.error_fetching_latest_date, error.message)
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
             })
 
         // تغییر رنگ نوار وضعیت و نوار ناوبری
@@ -206,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         titleLayout.setPadding(32, 32, 32, 32)
 
         val titleTextView = TextView(this)
-        titleTextView.text = "Add New Target"
+        titleTextView.text = resources.getString(R.string.add_new_target)
         titleTextView.textSize = 20f
         titleTextView.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
 
@@ -225,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         layoutAlertDialog.setPadding(32, 32, 32, 32)
 
         val nameTextInputLayout = TextInputLayout(this)
-        nameTextInputLayout.hint = "Enter name"
+        nameTextInputLayout.hint = resources.getString(R.string.enter_name)
         nameTextInputLayout.setPadding(10, 10, 10, 10)
         val nameEditText = EditText(this)
         nameEditText.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
@@ -240,7 +238,7 @@ class MainActivity : AppCompatActivity() {
         nameTextInputLayout.layoutParams = nameLayoutParams
 
         val priceTextInputLayout = TextInputLayout(this)
-        priceTextInputLayout.hint = "Enter price"
+        priceTextInputLayout.hint = resources.getString(R.string.enter_price)
         priceTextInputLayout.setPadding(10, 10, 10, 10)
         val priceEditText = EditText(this)
         priceEditText.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
@@ -257,20 +255,21 @@ class MainActivity : AppCompatActivity() {
 
                     try {
                         val priceLong = cleanString.toLong()
-                        val formattedPrice = String.format("%,d", priceLong) // فرمت کردن با کاما
+                        val formattedPrice = String.format("%,d", priceLong)
                         priceEditText.removeTextChangedListener(this)
                         priceEditText.setText(formattedPrice)
                         priceEditText.setSelection(formattedPrice.length)
                         priceEditText.addTextChangedListener(this)
                     } catch (e: NumberFormatException) {
-                        priceEditText.error = "لطفا عدد معتبر وارد کنید"
+                        priceEditText.error = resources.getString(R.string.Enter_valid_num)
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-        
+
         priceTextInputLayout.addView(priceEditText)
         val priceLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -281,7 +280,7 @@ class MainActivity : AppCompatActivity() {
 
         val necessaryCheckBox = CheckBox(this)
         necessaryCheckBox.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
-        necessaryCheckBox.text = "Is it necessary ?"
+        necessaryCheckBox.text = getString(R.string.Is_it_necessary)
         necessaryCheckBox.setPadding(10, 10, 10, 20)
         val checkboxLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -293,7 +292,7 @@ class MainActivity : AppCompatActivity() {
         val imageView = ImageView(this)
         image_alert = imageView
         imageView.setImageResource(android.R.drawable.ic_menu_camera)
-        imageView.setContentDescription("Select an image")
+        imageView.setContentDescription(resources.getString(R.string.selected_img))
         imageView.setPadding(10, 10, 10, 10)
         imageView.setBackgroundResource(R.drawable.back_view_border)
 
@@ -311,7 +310,7 @@ class MainActivity : AppCompatActivity() {
 
         builderAlert.setView(layoutAlertDialog)
 
-        builderAlert.setPositiveButton("Save", null)
+        builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -320,13 +319,13 @@ class MainActivity : AppCompatActivity() {
 
         val positiveButton = dialogMonthlyIncome.getButton(AlertDialog.BUTTON_POSITIVE)
         positiveButton.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, // عرض دکمه را به کل صفحه گسترش می‌دهد
+            LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
         positiveButton.setOnClickListener {
             val name = nameEditText.text.toString()
-            val price = priceEditText.text.toString().replace(",","")
+            val price = priceEditText.text.toString().replace(",", "")
             val date = persian_date_today
             val isNecessary = necessaryCheckBox.isChecked
             val img = selectedImageUri?.let { saveImageToInternalStorage(it) }
@@ -334,11 +333,11 @@ class MainActivity : AppCompatActivity() {
 
 
             if (name.isEmpty()) {
-                Toast.makeText(this, "Name Is Empty !!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.name_is_empty), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
-                Toast.makeText(this, "Price Is Empty !!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.price_is_empty), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -357,7 +356,7 @@ class MainActivity : AppCompatActivity() {
             }.subscribeOn(Schedulers.io()) // Ensure it's running on a background thread
                 .observeOn(AndroidSchedulers.mainThread()) // Back to UI thread after completion
                 .doOnTerminate {
-                    Toast.makeText(this, "Save Target Successfully ✔✔✔", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, resources.getString(R.string.message_save_target), Toast.LENGTH_SHORT).show()
                     dialogMonthlyIncome.dismiss()
                     selectedImageUri = null
                     image_alert.setImageResource(android.R.drawable.ic_menu_camera)
@@ -418,7 +417,7 @@ class MainActivity : AppCompatActivity() {
             inputStream.close()
             outputStream.close()
 
-            return file.absolutePath  // مسیر تصویر را برمی‌گرداند
+            return file.absolutePath
         } catch (e: IOException) {
             e.printStackTrace()
             return null
@@ -436,8 +435,8 @@ class MainActivity : AppCompatActivity() {
         time: String
     ) {
         val builderAlert = AlertDialog.Builder(this, R.style.Base_Theme_KarenBalance)
-        builderAlert.setTitle("Reports Expense")
-        builderAlert.setMessage("Enter your Description :")
+        builderAlert.setTitle(resources.getString(R.string.report_expense))
+        builderAlert.setMessage(resources.getString(R.string.enter_description))
 
         val layoutAlertDialog = LinearLayout(this)
         layoutAlertDialog.orientation = LinearLayout.VERTICAL
@@ -452,7 +451,7 @@ class MainActivity : AppCompatActivity() {
 
         val editTxtDescription = EditText(this)
         editTxtDescription.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
-        editTxtDescription.hint = "enter your Description for expene"
+        editTxtDescription.hint = resources.getString(R.string.txt_hint_expe_daily)
         editTxtDescription.setBackgroundResource(R.drawable.back_view_border)
         editTxtDescription.textSize = 25f
         editTxtDescription.minHeight = 350
@@ -470,7 +469,7 @@ class MainActivity : AppCompatActivity() {
         layoutAlertDialog.addView(editTxtDescription)
 
         builderAlert.setView(layoutAlertDialog)
-        builderAlert.setPositiveButton("Save", null)
+        builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -514,20 +513,20 @@ class MainActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        print("update successfully !!")
+                        Toast.makeText(this, resources.getString(R.string.update_successfull), Toast.LENGTH_SHORT).show()
                     }, { error ->
                         Toast.makeText(
                             this,
-                            "Error updating record: ${error.message}",
+                            resources.getString(R.string.error_updating_record, error.message),
                             Toast.LENGTH_LONG
                         ).show()
                     })
 
-                Toast.makeText(this, "Descriptions saved !!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
                 dialogMonthlyIncome.dismiss()
 
             } else
-                Toast.makeText(this, "Description can't be NULL !!! ❌❌", Toast.LENGTH_SHORT)
+                Toast.makeText(this, resources.getString(R.string.description_can_not_null), Toast.LENGTH_SHORT)
                     .show()
 
         }
@@ -537,8 +536,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     fun show_alert_add_report() {
         val builderAlert = AlertDialog.Builder(this, R.style.Base_Theme_KarenBalance)
-        builderAlert.setTitle("Reports Expense")
-        builderAlert.setMessage("Enter your Description :")
+        builderAlert.setTitle(resources.getString(R.string.report_expense))
+        builderAlert.setMessage(resources.getString(R.string.enter_description))
 
         val layoutAlertDialog = LinearLayout(this)
         layoutAlertDialog.orientation = LinearLayout.VERTICAL
@@ -547,7 +546,7 @@ class MainActivity : AppCompatActivity() {
 
         val txtPrice = EditText(this)
         txtPrice.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
-        txtPrice.hint = "enter Price "
+        txtPrice.hint = resources.getString(R.string.enter_price)
         txtPrice.setBackgroundResource(R.drawable.back_view_border)
         txtPrice.textSize = 25f
         txtPrice.inputType = InputType.TYPE_CLASS_NUMBER
@@ -567,17 +566,22 @@ class MainActivity : AppCompatActivity() {
                         txtPrice.setSelection(formattedPrice.length)
                         txtPrice.addTextChangedListener(this)
                     } catch (e: NumberFormatException) {
-                        Toast.makeText(this@MainActivity, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            resources.getString(R.string.Enter_valid_num),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         val editTxtDescription = EditText(this)
         editTxtDescription.setTextColor(ContextCompat.getColor(this, R.color.chocolate_brown))
-        editTxtDescription.hint = "enter your Description for expene"
+        editTxtDescription.hint = resources.getString(R.string.txt_hint_expe_daily)
         editTxtDescription.setBackgroundResource(R.drawable.back_view_border)
         editTxtDescription.textSize = 25f
         editTxtDescription.minHeight = 350
@@ -595,7 +599,7 @@ class MainActivity : AppCompatActivity() {
         layoutAlertDialog.addView(editTxtDescription)
 
         builderAlert.setView(layoutAlertDialog)
-        builderAlert.setPositiveButton("Save", null)
+        builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
         val dialogMonthlyIncome = builderAlert.create()
         dialogMonthlyIncome.setCancelable(false)
@@ -626,7 +630,7 @@ class MainActivity : AppCompatActivity() {
                     .isNotEmpty()
             ) {
                 val db = DBHandler.getDatabase(context = this)
-                val price = txtPrice.text.toString().replace(",","").toInt()
+                val price = txtPrice.text.toString().replace(",", "").toInt()
                 val date = persian_date_today
                 val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
 
@@ -647,18 +651,18 @@ class MainActivity : AppCompatActivity() {
                     }, { error ->
                         Toast.makeText(
                             this,
-                            "Error updating record: ${error.message}",
+                            resources.getString(R.string.error_updating_record, error.message),
                             Toast.LENGTH_LONG
                         ).show()
                     })
 
-                Toast.makeText(this, "Descriptions saved !!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
                 dialogMonthlyIncome.dismiss()
 
             } else
                 Toast.makeText(
                     this,
-                    "Description can't be NULL or empty !!! ❌❌",
+                    resources.getString(R.string.price_can_not_null),
                     Toast.LENGTH_SHORT
                 )
                     .show()
@@ -692,7 +696,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(
                     this,
-                    "SMS permission is required to use this feature.",
+                    getString(R.string.sms_permission_required),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -714,16 +718,15 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // اگر دسترسی داده شده باشد، هیچ کاری انجام نمی‌شود
             } else {
-                // اگر کاربر دسترسی نداد، برنامه بسته می‌شود
                 Toast.makeText(
                     this,
-                    "To use the Karen Balance app, you must grant permission to access messages.",
+                    getString(R.string.permission_required_message),
                     Toast.LENGTH_LONG
                 ).show()
-                finish() // بستن Activity
+                finish()
             }
+
         }
     }
 

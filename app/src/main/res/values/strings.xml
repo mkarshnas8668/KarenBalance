@@ -25,4 +25,46 @@
     <string name="delete">حذف</string>
     <string name="edit">ویرایش</string>
     <string name="main_target">هدف اصلی</string>
+
+    <!--    add other txt to string -->
+    <string name="error_fetching_latest_date">خطا در دریافت تاریخ جدید: %1$s</string>
+    <string name="error_fetching_data">خطا در دریافت داده‌ها: %1$s</string>
+    <string name="add_new_target">اضافه کردن هدف جدید</string>
+    <string name="enter_name">وارد کردن نام</string>
+    <string name="enter_price">وارد کردن قیمت</string>
+    <string name="Enter_valid_num">لطفا عدد معتبر وارد کنید</string>
+    <string name="Is_it_necessary">ایا این ضروری است ؟</string>
+    <string name="selected_img">عکس را انتخاب کنید</string>
+    <string name="Save">ذخیره</string>
+    <string name="name_is_empty">نام خالی است !</string>
+    <string name="price_is_empty">قیمت خالی است !</string>
+    <string name="message_save_target">ذخیره ی هدف با موفقیت انجام شد ✔✔✔</string>
+    <string name="report_expense">گزارش مخارج روزانه</string>
+    <string name="enter_description">توضحات خود را وارد کنید :</string>
+    <string name="txt_hint_expe_daily">توضیحات خود را برای این خرج وارد کنید</string>
+    <string name="update_successfull">تغیر با موفقیت ایجاد شد ✔✔✔</string>
+    <string name="message_save_description">توضیحات ذخیره شد ✔✔✔</string>
+    <string name="error_updating_record">خطا در بروزرسانی رکورد: %1$s</string>
+    <string name="description_can_not_null">توضحیات نمی تواند  خالی باشد ❌❌</string>
+    <string name="price_can_not_null">قیمت نمی تواند  خالی باشد ❌❌</string>
+    <string name="sms_permission_required">برای استفاده از این ویژگی، اجازه ارسال پیامک مورد نیاز است.</string>
+    <string name="permission_required_message">برای استفاده از برنامه Karen Balance، باید اجازه دسترسی به پیام‌ها را بدهید.</string>
+    <string name="error_get_name_bank">خطا در گرفتن نام بانک !!</string>
+    <string name="daily_spent_over">مخارج روزانه - مبلغ مصرف نشده: \n 0 - بیش از حد مجاز!!</string>
+    <string name="daily_spent_income_unspent">درآمد خرج‌شده روزانه - خرج‌نشده: \n %1$s</string>
+    <string name="monthly_spent_income_unspent">درآمد خرج‌شده ماهیانه - خرج‌نشده: \n %1$s</string>
+    <string name="used">خرج شده</string>
+    <string name="over_limit">بیش از حد</string>
+    <string name="enter_bank_name">نام بانکی که پیامک درآمد شما از آن به دست می‌آید را وارد کنید :</string>
+    <string name="alike_bank_name">ResalatBank | +9891*********</string>
+    <string name="name_bank_saved">نام بانک : %1$s ذخیره شد!</string>
+    <string name="filed_can_not_empty">فیلد نمی تواند خالی باشد</string>
+    <string name="monthly_income">درامد ماهیانه</string>
+    <string name="enter_monthly_income">درامد ماهیانه ی خود را وارد کنید :</string>
+    <string name="monthly_income_save">دارمد ماهیانه با موفقیت ذخیره شد ✔✔✔</string>
+<!--    <string name=""></string>-->
+<!--    <string name=""></string>-->
+<!--    <string name=""></string>-->
+
+
 </resources>

@@ -35,10 +35,12 @@
     <string name="Enter_valid_num">لطفا عدد معتبر وارد کنید</string>
     <string name="Is_it_necessary">ایا این ضروری است ؟</string>
     <string name="selected_img">عکس را انتخاب کنید</string>
+    <string name="clear_img">عکس را حذف کنید</string>
     <string name="Save">ذخیره</string>
     <string name="name_is_empty">نام خالی است !</string>
     <string name="price_is_empty">قیمت خالی است !</string>
     <string name="message_save_target">ذخیره ی هدف با موفقیت انجام شد ✔✔✔</string>
+    <string name="message_del_target">حذف هدف با موفقیت انجام شد ✔✔✔</string>
     <string name="report_expense">گزارش مخارج روزانه</string>
     <string name="enter_description">توضحات خود را وارد کنید :</string>
     <string name="txt_hint_expe_daily">توضیحات خود را برای این خرج وارد کنید</string>
@@ -69,7 +71,18 @@
     <string name="new_month_description">وارد ماه جدید شدیم! هزینه‌های ماه گذشته پاک‌سازی شدند.</string>
     <string name="title_chart_expences">خرج های روزانه</string>
     <string name="today">امروز</string>
-<!--    <string name=""></string>-->
+    <string name="target_name_main">%1$s (اصلی)</string>
+    <string name="Necessary">ضروری</string>
+    <string name="Unnecessary">غیر ضروری</string>
+    <string name="ok">باشه</string>
+    <string name="cancel">بیخیال</string>
+    <string name="change_main_target_title">تغییر هدف اصلی</string>
+    <string name="change_main_target_message">آیا مطمئن هستید که می‌خواهید این را به عنوان هدف اصلی تنظیم کنید؟</string>
+    <string name="delete_target_title">حذف هدف</string>
+    <string name="delete_target_message">آیا مطمئن هستید که می‌خواهید %1$s را حذف کنید؟</string>
+    <string name="update_target">ویرایش کردن هدف</string>
+    <string name="update">به روزرسانی</string>
+    <string name="error_invalid_num">عدد درست وارد کنید !!</string>
 <!--    <string name=""></string>-->
 
 

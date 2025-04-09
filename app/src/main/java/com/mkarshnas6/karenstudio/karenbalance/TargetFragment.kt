@@ -52,7 +52,7 @@ class TargetFragment : Fragment(R.layout.activity_target) {
             }, { error ->
                 Toast.makeText(
                     requireContext(),
-                    "Error fetching data: ${error.message}",
+                    resources.getString(R.string.error_fetching_data, error.message),
                     Toast.LENGTH_LONG
                 ).show()
             })

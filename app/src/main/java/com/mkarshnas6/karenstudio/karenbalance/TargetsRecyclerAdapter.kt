@@ -69,19 +69,22 @@ class TargetsRecyclerAdapter(
 
             val monthly_income = pref.getLong("monthly_income", 1111111111)
             dailySpendingLimit = (monthly_income / 31).toInt()
-            val saving_income = pref.getLong("saving_income",0)
-            val main_target = (pref.getString("main_target","0"))?.toInt()
+            val saving_income = pref.getLong("saving_income", 0)
+            val main_target = (pref.getString("main_target", "0"))?.toInt()
 
             val percentage = if (target.price > 0) {
                 (saving_income.toFloat() / target.price.toFloat()) * 100
-            } else { 0f }
+            } else {
+                0f
+            }
 
             if (target.id != main_target) {
                 binding.txtNameTarget.setTextColor(context.getColor(R.color.white))
                 binding.txtNameTarget.text = target.name
-            }else{
+            } else {
                 binding.txtNameTarget.setTextColor(context.getColor(R.color.green_200))
-                binding.txtNameTarget.text = "${ target.name } ( Main )"
+                binding.txtNameTarget.text =
+                    context.getString(R.string.target_name_main, target.name)
             }
 
             binding.txtDateTarget.text = target.date
@@ -92,18 +95,29 @@ class TargetsRecyclerAdapter(
                     binding.txtShowProgress.text = "100 %"
 
                 binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
-                if(saving_income >= target.price){
-                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${target.price.toLong().format_number()} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                if (saving_income >= target.price) {
+                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${
+                        target.price.toLong().format_number()
+                    } ${context.getString(R.string.out_of)} ${
+                        target.price.toLong().format_number()
+                    }"
                     binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.green_200))
-                }else{
-                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${saving_income.toLong().format_number()} ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                } else {
+                    binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} ${
+                        saving_income.toLong().format_number()
+                    } ${context.getString(R.string.out_of)} ${
+                        target.price.toLong().format_number()
+                    }"
                     binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.white))
                 }
                 binding.progressBarTarget.progress = percentage.toInt()
-            }else{
+            } else {
                 binding.txtShowProgress.text = "0 %"
                 binding.txtDescriptionTarget.setTextColor(context.getColor(R.color.oring))
-                binding.txtDescriptionTarget.text = "${context.getString(R.string.you_have)} 0 ${context.getString(R.string.out_of)} ${target.price.toLong().format_number()}"
+                binding.txtDescriptionTarget.text =
+                    "${context.getString(R.string.you_have)} 0 ${context.getString(R.string.out_of)} ${
+                        target.price.toLong().format_number()
+                    }"
                 binding.progressBarTarget.progress = 0
 
             }
@@ -134,10 +148,10 @@ class TargetsRecyclerAdapter(
 
             if (target.necessary) {
                 binding.txtTypeTarget.setTextColor(context.getColor(R.color.green_200))
-                binding.txtTypeTarget.text = "Necessary"
+                binding.txtTypeTarget.text = context.getString(R.string.Necessary)
             } else {
                 binding.txtTypeTarget.setTextColor(context.getColor(R.color.oring))
-                binding.txtTypeTarget.text = "Unnecessary"
+                binding.txtTypeTarget.text = context.getString(R.string.Unnecessary)
             }
 
             binding.root.setOnClickListener {
@@ -157,7 +171,7 @@ class TargetsRecyclerAdapter(
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_main_target -> {
-                    onChangeMainTarget(context,target)
+                    onChangeMainTarget(context, target)
                     true
                 }
 
@@ -181,14 +195,14 @@ class TargetsRecyclerAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun onChangeMainTarget(context: Context, target: TargetEntity) {
         AlertDialog.Builder(context)
-            .setTitle("Change Main Target")
-            .setMessage("Are you sure you want to set this as your main target?")
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(context.getString(R.string.change_main_target_title))
+            .setMessage(context.getString(R.string.change_main_target_message))
+            .setPositiveButton(context.getString(R.string.ok)) { _, _ ->
                 pref.edit().putString("main_target", target.id.toString()).apply()
 
                 notifyDataSetChanged()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(context.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -197,20 +211,20 @@ class TargetsRecyclerAdapter(
 
     fun onDeleteTarget(target: TargetEntity) {
         AlertDialog.Builder(context)
-            .setTitle("Delete Target")
-            .setMessage("Are you sure you want to delete ${target.name}?")
-            .setPositiveButton("Delete") { _, _ ->
+            .setTitle(context.getString(R.string.delete_target_title))
+            .setMessage(context.getString(R.string.delete_target_message, target.name))
+            .setPositiveButton(context.getString(R.string.delete)) { _, _ ->
                 val db = DBHandler.getDatabase(context)
                 Completable.fromAction {
                     db.targetDao().deleteTargetById(target.id)
                 }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnTerminate {
-                        Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.message_del_target), Toast.LENGTH_SHORT).show()
                     }
                     .subscribe()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.cancel), null)
             .show()
     }
 
@@ -227,7 +241,7 @@ class TargetsRecyclerAdapter(
         }
 
         val titleTextView = TextView(context).apply {
-            text = "Update Target"
+            text = context.getString(R.string.update_target)
             textSize = 20f
             setTextColor(ContextCompat.getColor(context, R.color.chocolate_brown))
             layoutParams = LinearLayout.LayoutParams(
@@ -246,7 +260,7 @@ class TargetsRecyclerAdapter(
         }
 
         val nameTextInputLayout = TextInputLayout(context).apply {
-            hint = "Enter name"
+            hint = context.getString(R.string.enter_name)
             setPadding(10, 10, 10, 10)
         }
         val nameEditText = EditText(context).apply {
@@ -258,7 +272,7 @@ class TargetsRecyclerAdapter(
         nameTextInputLayout.addView(nameEditText)
 
         val priceTextInputLayout = TextInputLayout(context).apply {
-            hint = "Enter price"
+            hint = context.getString(R.string.enter_price)
             setPadding(10, 10, 10, 10)
         }
         val priceEditText = EditText(context).apply {
@@ -284,10 +298,12 @@ class TargetsRecyclerAdapter(
                         priceEditText.setSelection(formattedPrice.length)
                         priceEditText.addTextChangedListener(this)
                     } catch (e: NumberFormatException) {
-                        Toast.makeText(context, "enter the valid number !!!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.Enter_valid_num), Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -296,7 +312,7 @@ class TargetsRecyclerAdapter(
 
         val necessaryCheckBox = CheckBox(context).apply {
             setTextColor(ContextCompat.getColor(context, R.color.chocolate_brown))
-            text = "Is it necessary?"
+            text = context.getString(R.string.Is_it_necessary)
             setPadding(10, 10, 10, 20)
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -308,7 +324,7 @@ class TargetsRecyclerAdapter(
         // Initialize image_alert only after the layout is set up
         val imageView = ImageView(context).apply {
             setImageURI(target.img.toUri())
-            contentDescription = "Select an image"
+            contentDescription = context.getString(R.string.selected_img)
             setPadding(10, 10, 10, 10)
             setBackgroundResource(R.drawable.back_view_border)
             layoutParams = LinearLayout.LayoutParams(
@@ -320,7 +336,7 @@ class TargetsRecyclerAdapter(
 
         // Add a button or TextView to clear the image
         val clearImageButton = Button(context).apply {
-            text = "Clear Image"
+            text = context.getString(R.string.clear_img)
             setTextColor(ContextCompat.getColor(context, R.color.red)) // Optional: Style the button
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -344,7 +360,7 @@ class TargetsRecyclerAdapter(
         }
 
         builderAlert.setView(layoutAlertDialog)
-        builderAlert.setPositiveButton("Update", null)
+        builderAlert.setPositiveButton(context.getString(R.string.update), null)
 
         val dialog = builderAlert.create().apply {
             setCancelable(false)
@@ -364,7 +380,7 @@ class TargetsRecyclerAdapter(
 
         positiveButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
-            val priceText = priceEditText.text.toString().replace(",","").trim()
+            val priceText = priceEditText.text.toString().replace(",", "").trim()
             val date = persian_date_today
             val isNecessary = necessaryCheckBox.isChecked
             val img = imageView.drawable?.let { drawable ->
@@ -374,17 +390,17 @@ class TargetsRecyclerAdapter(
 
             // Validate inputs
             if (name.isEmpty()) {
-                Toast.makeText(context, "Name is empty!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.name_is_empty), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             if (priceText.isEmpty()) {
-                Toast.makeText(context, "Price is empty!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.price_is_empty), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             val price = priceText.toLongOrNull()
             if (price == null) {
-                Toast.makeText(context, "Invalid price!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.error_invalid_num), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -402,7 +418,7 @@ class TargetsRecyclerAdapter(
             }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate {
-                    Toast.makeText(context, "Update Target Successfully ✔✔✔", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, context.getString(R.string.update_successfull), Toast.LENGTH_SHORT)
                         .show()
                     dialog.dismiss()
                     selectedImageUri = null

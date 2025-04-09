@@ -43,10 +43,10 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
         val overSpentAmount = kotlin.math.abs(saving_income)
 //
         if (saving_income >= 0) {
-            binding.txtShowSaving.text = "Your saving income: $saving_income"
+            binding.txtShowSaving.text = context?.getString(R.string.your_saving_income, saving_income.toLong().format_number().toString())
             binding.txtShowSaving.setTextColor(requireContext().getColor(R.color.green_200))
         } else {
-            binding.txtShowSaving.text = "You have overspent! You exceeded your limit by $overSpentAmount."
+            binding.txtShowSaving.text = context?.getString(R.string.you_overspent, overSpentAmount.toLong().format_number().toString())
             binding.txtShowSaving.setTextColor(requireContext().getColor(R.color.red))
         }
 

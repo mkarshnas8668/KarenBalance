@@ -83,7 +83,9 @@
     <string name="update_target">ویرایش کردن هدف</string>
     <string name="update">به روزرسانی</string>
     <string name="error_invalid_num">عدد درست وارد کنید !!</string>
-<!--    <string name=""></string>-->
+    <string name="your_saving_income">درآمد پس‌انداز شما: %1$s</string>
+    <string name="you_overspent">شما بیش از حد خرج کرده‌اید! %1$s بیشتر از حد مجاز خرج کردید.</string>
+
 
 
 </resources>

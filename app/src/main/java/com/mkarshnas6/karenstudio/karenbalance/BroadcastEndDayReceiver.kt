@@ -90,14 +90,15 @@ class BroadcastEndDayReceiver() {
             )
 
             val notificationText = if (isOverspent) {
-                "You spent $savingDifference more than your daily limit! Be careful. 😓"
+                context.getString(R.string.notification_overspent, savingDifference.toLong().format_number().toString())
             } else {
-                "Great job! You saved $savingDifference today. 🎉"
+                context.getString(R.string.notification_saved, savingDifference.toLong().format_number().toString())
             }
+
 
             val notification = NotificationCompat.Builder(context, "channel")
                 .setSmallIcon(R.drawable.ic_money_navigation)
-                .setContentTitle("Daily Financial Report")
+                .setContentTitle(context.getString(R.string.daily_financial_report))
                 .setContentText(notificationText)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
@@ -148,8 +149,8 @@ class BroadcastEndDayReceiver() {
 
                         val notification = NotificationCompat.Builder(context, "channel")
                             .setSmallIcon(R.drawable.ic_money_navigation)
-                            .setContentTitle("New Month Started")
-                            .setContentText("We've entered a new month! Last month's expenses have been cleared.")
+                            .setContentTitle(context.getString(R.string.new_month_started))
+                            .setContentText(context.getString(R.string.new_month_description))
                             .setPriority(NotificationCompat.PRIORITY_HIGH)
                             .setContentIntent(pendingIntent)
                             .setAutoCancel(true)

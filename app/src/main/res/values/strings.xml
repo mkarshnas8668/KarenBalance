@@ -62,6 +62,11 @@
     <string name="monthly_income">درامد ماهیانه</string>
     <string name="enter_monthly_income">درامد ماهیانه ی خود را وارد کنید :</string>
     <string name="monthly_income_save">دارمد ماهیانه با موفقیت ذخیره شد ✔✔✔</string>
+    <string name="notification_overspent">شما %1$s بیشتر از حد مجاز روزانه خرج کردید! مراقب باش. 😓</string>
+    <string name="notification_saved">آفرین! شما امروز %1$s صرفه‌جویی کردید. 🎉</string>
+    <string name="daily_financial_report">گزارش مالی روزانه</string>
+    <string name="new_month_started">شروع ماه جدید</string>
+    <string name="new_month_description">وارد ماه جدید شدیم! هزینه‌های ماه گذشته پاک‌سازی شدند.</string>
 <!--    <string name=""></string>-->
 <!--    <string name=""></string>-->
 <!--    <string name=""></string>-->

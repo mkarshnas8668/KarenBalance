@@ -93,7 +93,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                 // مدیریت خطا در صورت بروز مشکل در واکشی داده‌ها
                 Toast.makeText(
                     requireContext(),
-                    "Error fetching data: ${error.message}",
+                    resources.getString(R.string.error_fetching_data,error.message),
                     Toast.LENGTH_LONG
                 ).show()
             })
@@ -120,8 +120,8 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                 if (daily.date == persian_date_today) {
                     val builderAlert =
                         AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
-                    builderAlert.setTitle("Reports Expense")
-                    builderAlert.setMessage("Enter your Description :")
+                    builderAlert.setTitle(resources.getString(R.string.report_expense))
+                    builderAlert.setMessage(resources.getString(R.string.enter_description))
 
                     val layoutAlertDialog = LinearLayout(context).apply {
                         orientation = LinearLayout.VERTICAL
@@ -136,7 +136,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                                 R.color.chocolate_brown
                             )
                         )
-                        hint = "Enter Price"
+                        hint = resources.getString(R.string.enter_price)
                         setBackgroundResource(R.drawable.back_view_border)
                         textSize = 25f
                         inputType = InputType.TYPE_CLASS_NUMBER
@@ -166,7 +166,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                                 } catch (e: NumberFormatException) {
                                     Toast.makeText(
                                         context,
-                                        "enter the valid number !!!",
+                                        resources.getString(R.string.Enter_valid_num),
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -197,7 +197,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                                 R.color.chocolate_brown
                             )
                         )
-                        hint = "Enter your Description for expense"
+                        hint = resources.getString(R.string.enter_description)
                         setBackgroundResource(R.drawable.back_view_border)
                         textSize = 25f
                         minHeight = 350
@@ -217,7 +217,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                     }
 
                     builderAlert.setView(layoutAlertDialog)
-                    builderAlert.setPositiveButton("Save", null)
+                    builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
                     val dialogMonthlyIncome = builderAlert.create().apply {
                         setCancelable(false)
@@ -249,15 +249,15 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                                 }, { error ->
                                     Toast.makeText(
                                         context,
-                                        "Error updating record: ${error.message}",
+                                        resources.getString(R.string.error_updating_record,error.message),
                                         Toast.LENGTH_LONG
                                     ).show()
                                 })
 
-                            Toast.makeText(context, "Description saved!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
                             dialogMonthlyIncome.dismiss()
                         } else {
-                            Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT)
+                            Toast.makeText(context, resources.getString(R.string.filed_can_not_empty), Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
@@ -267,8 +267,8 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
             expense_report?.let { report ->
                 val builderAlert =
                     AlertDialog.Builder(requireContext(), R.style.Base_Theme_KarenBalance)
-                builderAlert.setTitle("Reports Expense")
-                builderAlert.setMessage("Enter your Description :")
+                builderAlert.setTitle(resources.getString(R.string.report_expense))
+                builderAlert.setMessage(resources.getString(R.string.enter_description))
 
                 val layoutAlertDialog = LinearLayout(context).apply {
                     orientation = LinearLayout.VERTICAL
@@ -278,7 +278,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
 
                 val edittxtPrice = EditText(context).apply {
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.chocolate_brown))
-                    hint = "Enter your Price"
+                    hint = resources.getString(R.string.enter_price)
                     setBackgroundResource(R.drawable.back_view_border)
                     textSize = 25f
                     setText(report.price.toString())
@@ -292,7 +292,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
 
                 val editTxtDescription = EditText(context).apply {
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.chocolate_brown))
-                    hint = "Enter your Description for expense"
+                    hint = resources.getString(R.string.enter_description)
                     setBackgroundResource(R.drawable.back_view_border)
                     textSize = 25f
                     minHeight = 350
@@ -312,7 +312,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                 }
 
                 builderAlert.setView(layoutAlertDialog)
-                builderAlert.setPositiveButton("Save", null)
+                builderAlert.setPositiveButton(resources.getString(R.string.Save), null)
 
                 val dialogMonthlyIncome = builderAlert.create().apply {
                     setCancelable(false)
@@ -343,15 +343,15 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
                             }, { error ->
                                 Toast.makeText(
                                     context,
-                                    "Error updating record: ${error.message}",
+                                    resources.getString(R.string.error_updating_record),
                                     Toast.LENGTH_LONG
                                 ).show()
                             })
 
-                        Toast.makeText(context, "Description saved!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
                         dialogMonthlyIncome.dismiss()
                     } else {
-                        Toast.makeText(context, "Fields cannot be empty!", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, resources.getString(R.string.filed_can_not_empty), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -385,7 +385,7 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
             }, { error ->
                 Toast.makeText(
                     requireContext(),
-                    "Error fetching data: ${error.message}",
+                    resources.getString(R.string.error_fetching_data,error.message),
                     Toast.LENGTH_LONG
                 ).show()
             })

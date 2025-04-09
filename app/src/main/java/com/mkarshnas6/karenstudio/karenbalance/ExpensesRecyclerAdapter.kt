@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mkarshnas6.karenstudio.karenbalance.ExpenseEntity
 import com.mkarshnas6.karenstudio.karenbalance.OnExpenseClickListener
+import com.mkarshnas6.karenstudio.karenbalance.R
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ListItemExpensesBinding
 import com.mkarshnas6.karenstudio.karenbalance.format_number
 
@@ -29,7 +30,7 @@ class ExpensesRecyclerAdapter(
             binding.txtPrice.text = expense.price.toString().format_number()
             binding.txtDescription.text = expense.description
             if (expense.date == PersianDateToday)
-                binding.txtDateTime.text = "Today \n ${expense.time}"
+                binding.txtDateTime.text = "${context.getString(R.string.today)} \n ${expense.time}"
             else
                 binding.txtDateTime.text = "${expense.date} \n ${expense.time}"
 

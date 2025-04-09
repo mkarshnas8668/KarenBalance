@@ -52,7 +52,7 @@ class ChartFragment : Fragment(R.layout.activity_chart) {
                     Entry(index.toFloat(), totalPrice.toFloat())
                 }
 
-                val dataSet = LineDataSet(entries, "Daily Expenses").apply {
+                val dataSet = LineDataSet(entries, resources.getString(R.string.title_chart_expences)).apply {
                     color = Color.RED
                     valueTextColor = Color.BLACK
                     setCircleColor(Color.RED)

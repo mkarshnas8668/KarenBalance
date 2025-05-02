@@ -2,12 +2,15 @@ package com.mkarshnas6.karenstudio.karenbalance
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.adivery.sdk.Adivery
+import com.adivery.sdk.AdiveryAdListener
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivityTargetBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -23,6 +26,30 @@ class TargetFragment : Fragment(R.layout.activity_target) {
         savedInstanceState: Bundle?
     ): View {
         binding = ActivityTargetBinding.inflate(inflater)
+
+        //        start show ads
+
+        Adivery.configure(requireActivity().application, "1c0fbf6f-8ccb-4b3f-bc06-72351eee6547")
+        val bannerAd_bottom = binding.bannerAddTarget
+
+        //        banner bottom
+        bannerAd_bottom.setBannerAdListener(object : AdiveryAdListener() {
+            override fun onError(reason: String) {
+                Log.e("adivary", "${reason}")
+            }
+
+            override fun onAdClicked() {
+                Toast.makeText(
+                    context,
+                    "خیلی ممنون که کلیک کردی ❤ :)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        bannerAd_bottom.loadAd()
+
+//        end shwo ADs
 
         setDataOnRecyclerTarget()
 

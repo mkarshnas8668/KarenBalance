@@ -5,12 +5,16 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import app.rive.runtime.kotlin.core.Rive
+import com.adivery.sdk.Adivery
+import com.adivery.sdk.AdiveryAdListener
 import com.mkarshnas6.karenstudio.karenbalance.BroadcastEndDayReceiver.Companion
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivitySavingBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
@@ -33,6 +37,30 @@ class SavingFragment : Fragment(R.layout.activity_saving) {
     ): View {
         binding = ActivitySavingBinding.inflate(inflater)
         Rive.init(requireContext())
+
+        //        start show ads
+
+        Adivery.configure(requireActivity().application, "1c0fbf6f-8ccb-4b3f-bc06-72351eee6547")
+        val bannerAd_bottom = binding.bannerAddSaving
+
+        //        banner bottom
+        bannerAd_bottom.setBannerAdListener(object : AdiveryAdListener() {
+            override fun onError(reason: String) {
+                Log.e("adivary", "${reason}")
+            }
+
+            override fun onAdClicked() {
+                Toast.makeText(
+                    context,
+                    "خیلی ممنون که کلیک کردی ❤ :)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        bannerAd_bottom.loadAd()
+
+//        end shwo ADs
 
         pref = requireContext().getSharedPreferences("Prefs_KarenBalance", MODE_PRIVATE)
         val monthly_income = pref.getLong("monthly_income", 1111111111)

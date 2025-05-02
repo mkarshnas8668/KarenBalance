@@ -16,8 +16,8 @@ android {
         applicationId = "com.mkarshnas6.karenstudio.karenbalance"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -99,5 +99,7 @@ dependencies {
 //    fragment .............
     implementation("androidx.activity:activity-ktx:1.6.0") // این کتابخانه برای استفاده از ActivityResultContracts نیاز است
     implementation("androidx.fragment:fragment-ktx:1.5.0")
+//    add adivary sdk
+    implementation("com.adivery:sdk:4.8.3")
 
 }

@@ -9,6 +9,18 @@
     tools:context=".TargetFragment">
 
 
+    <com.adivery.sdk.AdiveryBannerAdView
+        android:id="@+id/banner_add_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:banner_size="smart_banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:placement_id="a8db6b2c-6444-49b9-ad94-848cc035a718" />
+
+
     <TextView
         android:id="@+id/txt_list_empty_target"
         android:layout_width="283dp"
@@ -20,18 +32,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/banner_add_target" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_target_rycycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/banner_add_target">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reycler_targets"

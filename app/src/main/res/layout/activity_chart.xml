@@ -8,6 +8,16 @@
     android:background="@color/light_beige"
     tools:context=".ChartFragment">
 
+    <com.adivery.sdk.AdiveryBannerAdView
+        android:id="@+id/banner_add_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:banner_size="smart_banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:placement_id="686e8d92-94a6-4529-bc52-edef3f2b4b90" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_title"
         android:layout_width="0dp"
@@ -18,19 +28,20 @@
         app:layout_constraintBottom_toTopOf="@+id/card_chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/banner_add_chart">
 
         <TextView
             android:id="@+id/txt_title_charts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pacifico_egular"
-            android:padding="16dp"
             android:gravity="center"
+            android:padding="16dp"
             android:text="@string/average_daily_spending_amount_on_the_chart"
             android:textSize="20sp" />
 
     </androidx.cardview.widget.CardView>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_chart"
@@ -50,5 +61,6 @@
             android:layout_margin="16dp" />
 
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

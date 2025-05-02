@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.marginTop
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.adivery.sdk.Adivery
 import com.google.android.material.textfield.TextInputLayout
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivityMainBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
@@ -60,7 +61,8 @@ class MainActivity : AppCompatActivity() {
     private val persian_date_today: String
         get() = PersianDate.getPersianDateToday()
     private var selectedImageUri: Uri? = null
-
+    private var lastPauseTime = 0L
+    private var show_ads = false
 
     private val appPermission =
         arrayOf(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_MMS)
@@ -72,6 +74,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        show ADS
+
+        Adivery.configure(application, "1c0fbf6f-8ccb-4b3f-bc06-72351eee6547")
+        Adivery.prepareAppOpenAd(this, "4e9bad48-aa84-4fd4-8610-df9c7abbdd9a")
+
+        if (Adivery.isLoaded("4e9bad48-aa84-4fd4-8610-df9c7abbdd9a") && show_ads) {
+            Adivery.showAppOpenAd(this, "4e9bad48-aa84-4fd4-8610-df9c7abbdd9a")
+        }
+
+//        end shwo ADS
 
 //        send information daily to monthly db
         val db = DBHandler.getDatabase(this)
@@ -333,11 +345,16 @@ class MainActivity : AppCompatActivity() {
 
 
             if (name.isEmpty()) {
-                Toast.makeText(this, resources.getString(R.string.name_is_empty), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.name_is_empty), Toast.LENGTH_LONG)
+                    .show()
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
-                Toast.makeText(this, resources.getString(R.string.price_is_empty), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.price_is_empty),
+                    Toast.LENGTH_LONG
+                ).show()
                 return@setOnClickListener
             }
 
@@ -356,7 +373,11 @@ class MainActivity : AppCompatActivity() {
             }.subscribeOn(Schedulers.io()) // Ensure it's running on a background thread
                 .observeOn(AndroidSchedulers.mainThread()) // Back to UI thread after completion
                 .doOnTerminate {
-                    Toast.makeText(this, resources.getString(R.string.message_save_target), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.message_save_target),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     dialogMonthlyIncome.dismiss()
                     selectedImageUri = null
                     image_alert.setImageResource(android.R.drawable.ic_menu_camera)
@@ -513,7 +534,11 @@ class MainActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        Toast.makeText(this, resources.getString(R.string.update_successfull), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.update_successfull),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }, { error ->
                         Toast.makeText(
                             this,
@@ -522,11 +547,19 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     })
 
-                Toast.makeText(this, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.message_save_description),
+                    Toast.LENGTH_SHORT
+                ).show()
                 dialogMonthlyIncome.dismiss()
 
             } else
-                Toast.makeText(this, resources.getString(R.string.description_can_not_null), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.description_can_not_null),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
 
         }
@@ -656,7 +689,11 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     })
 
-                Toast.makeText(this, resources.getString(R.string.message_save_description), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.message_save_description),
+                    Toast.LENGTH_SHORT
+                ).show()
                 dialogMonthlyIncome.dismiss()
 
             } else
@@ -742,6 +779,22 @@ class MainActivity : AppCompatActivity() {
         applyOverrideConfiguration(config)
 
         super.attachBaseContext(newBase?.createConfigurationContext(config))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val pauseTime = System.currentTimeMillis() - lastPauseTime
+        if (pauseTime > 5000 && show_ads) { // بیشتر از ۵ ثانیه گذشته
+            if (Adivery.isLoaded("4e9bad48-aa84-4fd4-8610-df9c7abbdd9a")) {
+                Adivery.showAppOpenAd(this, "4e9bad48-aa84-4fd4-8610-df9c7abbdd9a")
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        lastPauseTime = System.currentTimeMillis()
+        show_ads = true
     }
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.adivery.sdk.Adivery
+import com.adivery.sdk.AdiveryAdListener
 import com.mkarshnas6.karenstudio.karenbalance.databinding.ActivityMoneyBinding
 import com.mkarshnas6.karenstudio.karenbalance.db.DBHandler
 import com.mkarshnas6.karenstudio.karenbalance.db.model.DailyEntity
@@ -46,6 +49,30 @@ class MoneyFragment : Fragment(R.layout.activity_money), OnExpenseClickListener 
 
 
         binding = ActivityMoneyBinding.inflate(inflater)
+
+        //        start show ads
+
+        Adivery.configure(requireActivity().application, "1c0fbf6f-8ccb-4b3f-bc06-72351eee6547")
+        val bannerAd_bottom = binding.bannerAddMoney
+
+        //        banner bottom
+        bannerAd_bottom.setBannerAdListener(object : AdiveryAdListener() {
+            override fun onError(reason: String) {
+                Log.e("adivary", "${reason}")
+            }
+
+            override fun onAdClicked() {
+                Toast.makeText(
+                    context,
+                    "خیلی ممنون که کلیک کردی ❤ :)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        bannerAd_bottom.loadAd()
+
+//        end shwo ADs
 
         // set infromations ...........
         setDataOnRecyclerDaily()
